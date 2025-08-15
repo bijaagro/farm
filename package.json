@@ -15,9 +15,8 @@
     "dev": "vite",
     "build": "npm run build:client",
     "build:client": "vite build",
-    "build:gh-pages": "vite build --mode gh-pages",
     "start": "vite preview",
-    "predeploy": "npm run build:gh-pages",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist --dotfiles",
 
     "format.fix": "prettier --write .",
