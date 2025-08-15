@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
     assetsInclude: ["**/*.js", "**/*.mjs"],
   },
   plugins: [react()],
-  base: "/farm/",
+  base: mode === "gh-pages" || process.env.NODE_ENV === "production" ? "/farm/" : "./",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./client"),
