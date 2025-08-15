@@ -29,7 +29,7 @@ const getApiBaseUrl = (): string => {
 
     // Enable mock mode for development, localhost, or builder.io development environments
     if (isLocalhost || isDevelopment || isBuilderDev) {
-      return "__MOCK_MODE__";
+      return "__MOCK_MODE__"; //"http://localhost:3031/api";  
     }
   }
 
