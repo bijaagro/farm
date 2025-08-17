@@ -566,9 +566,9 @@ export default function MainPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-green-800 text-white py-8 mt-16">
+      <footer className="bg-green-800 text-white py-6 sm:py-8 mt-8 sm:mt-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-green-200">
+          <p className="text-green-200 text-sm sm:text-base">
             © 2024 Bija Farms. Integrated farming solutions for sustainable
             agriculture.
           </p>
