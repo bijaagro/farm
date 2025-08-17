@@ -689,22 +689,22 @@ export default function HealthRecordsOverview({
                                   return (
                                     <div
                                       key={`${record.animalId}-${record.id}`}
-                                      className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors ml-6"
+                                      className="bg-gray-50 rounded-lg p-3 sm:p-4 hover:bg-gray-100 transition-colors ml-3 sm:ml-6"
                                     >
                                       <div className="space-y-3">
                                         {/* Animal Info - Prominent Display */}
-                                        <div className="flex items-center justify-between">
-                                          <div className="flex items-center gap-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                                             <Badge className={typeInfo.color}>
                                               <TypeIcon className="h-3 w-3 mr-1" />
                                               {typeInfo.label}
                                             </Badge>
-                                            <div className="text-lg font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">
+                                            <div className="text-sm sm:text-lg font-semibold text-blue-700 bg-blue-50 px-2 sm:px-3 py-1 rounded-full">
                                               {record.animalName}
                                             </div>
                                           </div>
 
-                                          <div className="flex items-center gap-2">
+                                          <div className="flex items-center gap-1 sm:gap-2 self-start sm:self-auto">
                                             {record.cost && (
                                               <div className="flex items-center gap-1 text-sm font-medium text-green-700">
                                                 <IndianRupee className="h-3 w-3" />
