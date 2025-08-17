@@ -596,19 +596,19 @@ export default function BreedingManager({
                           onOpenChange={() => toggleRecordExpansion(record.id)}
                         >
                           <CollapsibleTrigger asChild>
-                            <CardHeader className="p-4 pb-2 cursor-pointer hover:bg-pink-50/50">
+                            <CardHeader className="p-3 sm:p-4 pb-2 cursor-pointer hover:bg-pink-50/50">
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                                   {expandedRecords.has(record.id) ? (
-                                    <ChevronDown className="h-4 w-4 text-pink-600" />
+                                    <ChevronDown className="h-4 w-4 text-pink-600 flex-shrink-0" />
                                   ) : (
-                                    <ChevronRight className="h-4 w-4 text-pink-600" />
+                                    <ChevronRight className="h-4 w-4 text-pink-600 flex-shrink-0" />
                                   )}
-                                  <Badge className="bg-pink-100 text-pink-800">
+                                  <Badge className="bg-pink-100 text-pink-800 text-xs">
                                     {record.totalKids} Kid
                                     {record.totalKids !== 1 ? "s" : ""}
                                   </Badge>
-                                  <span className="text-sm text-gray-600">
+                                  <span className="text-xs sm:text-sm text-gray-600">
                                     {formatDate(
                                       record.actualDeliveryDate ||
                                         record.breedingDate,
@@ -616,10 +616,12 @@ export default function BreedingManager({
                                   </span>
                                 </div>
                               </div>
-                              <div className="text-sm space-y-1 text-left">
+                              <div className="text-xs sm:text-sm space-y-1 text-left">
                                 <p>
                                   <strong>Father:</strong>{" "}
-                                  {getFatherName(record.fatherId)}
+                                  <span className="truncate">
+                                    {getFatherName(record.fatherId)}
+                                  </span>
                                 </p>
                                 {record.maleKids !== undefined &&
                                   record.femaleKids !== undefined && (
