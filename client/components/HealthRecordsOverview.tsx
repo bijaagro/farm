@@ -481,12 +481,12 @@ export default function HealthRecordsOverview({
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-purple-600" />
                 <span className="text-sm text-gray-600">Recent (30d)</span>
               </div>
-              <div className="text-xl font-bold text-purple-900">
+              <div className="text-lg sm:text-xl font-bold text-purple-900">
                 {stats.recentRecords}
               </div>
             </CardContent>
