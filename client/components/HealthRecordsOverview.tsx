@@ -646,29 +646,29 @@ export default function HealthRecordsOverview({
                           <Collapsible key={descriptionGroup.id}>
                             <CollapsibleTrigger
                               onClick={() => toggleGroup(descriptionGroup.id)}
-                              className="w-full p-4 hover:bg-gray-50 transition-colors"
+                              className="w-full p-3 sm:p-4 hover:bg-gray-50 transition-colors"
                             >
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3 text-left">
+                                <div className="flex items-center gap-2 sm:gap-3 text-left flex-1 min-w-0">
                                   {isExpanded ? (
-                                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                                    <ChevronDown className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                   ) : (
-                                    <ChevronRight className="h-4 w-4 text-gray-500" />
+                                    <ChevronRight className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                   )}
-                                  <div>
-                                    <h4 className="text-md font-medium text-gray-800">
+                                  <div className="min-w-0 flex-1">
+                                    <h4 className="text-sm sm:text-md font-medium text-gray-800 truncate">
                                       {descriptionGroup.description}
                                     </h4>
                                     {vets.length > 0 && (
-                                      <div className="flex items-center gap-1 text-sm text-gray-600 mt-1">
-                                        <User className="h-3 w-3" />
-                                        <span>Vet: {vets.join(", ")}</span>
+                                      <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 mt-1">
+                                        <User className="h-3 w-3 flex-shrink-0" />
+                                        <span className="truncate">Vet: {vets.join(", ")}</span>
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-sm text-gray-500">
+                                <div className="flex items-center gap-2 flex-shrink-0">
+                                  <span className="text-xs sm:text-sm text-gray-500">
                                     {descriptionGroup.records.length} animal
                                     {descriptionGroup.records.length !== 1
                                       ? "s"
