@@ -509,7 +509,7 @@ export default function HealthRecordsOverview({
               stats.overdueCheckups > 0 ? "border-red-200 bg-red-50" : ""
             }
           >
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <AlertCircle
                   className={`h-4 w-4 ${stats.overdueCheckups > 0 ? "text-red-600" : "text-gray-400"}`}
@@ -521,7 +521,7 @@ export default function HealthRecordsOverview({
                 </span>
               </div>
               <div
-                className={`text-xl font-bold ${stats.overdueCheckups > 0 ? "text-red-900" : "text-gray-900"}`}
+                className={`text-lg sm:text-xl font-bold ${stats.overdueCheckups > 0 ? "text-red-900" : "text-gray-900"}`}
               >
                 {stats.overdueCheckups}
               </div>
