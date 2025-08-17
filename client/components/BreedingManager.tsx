@@ -541,18 +541,18 @@ export default function BreedingManager({
             <Rabbit className="h-4 w-4" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden">
+        <DialogContent className="w-[95vw] max-w-6xl max-h-[95vh] overflow-hidden mx-2 sm:mx-4">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Baby className="h-5 w-5" />
-              Breeding & Offspring Management - {mother.name}
+            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Baby className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="truncate">Breeding & Offspring - {mother.name}</span>
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs sm:text-sm">
               Record births and manage offspring for {mother.name}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(95vh-120px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 h-[calc(95vh-120px)]">
             {/* Breeding History */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
