@@ -694,7 +694,7 @@ export default function BreedingManager({
                                                     </Button>
                                                   </div>
                                                 </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div className="grid grid-cols-1 gap-3">
                                                   <div className="space-y-1">
                                                     <Label className="text-xs">
                                                       Name
