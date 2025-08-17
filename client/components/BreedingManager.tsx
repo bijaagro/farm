@@ -1018,10 +1018,10 @@ export default function BreedingManager({
 
                   {/* Kids Information */}
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-gray-900 flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <h4 className="font-medium text-gray-900 flex items-center gap-2 flex-wrap">
                         <Baby className="h-4 w-4 text-pink-600" />
-                        Kids Information
+                        <span>Kids Information</span>
                         <Badge
                           variant={
                             formData.kids.length > 1 ? "default" : "secondary"
@@ -1041,11 +1041,12 @@ export default function BreedingManager({
                         type="button"
                         onClick={() => setIsKidFormOpen(true)}
                         size="sm"
-                        className="bg-pink-600 hover:bg-pink-700 text-white"
+                        className="bg-pink-600 hover:bg-pink-700 text-white self-start sm:self-auto"
                         title="Click to add a new kid"
                       >
                         <Plus className="h-4 w-4 mr-1" />
-                        Add Kid
+                        <span className="hidden sm:inline">Add Kid</span>
+                        <span className="sm:hidden">Add</span>
                       </Button>
                     </div>
 
