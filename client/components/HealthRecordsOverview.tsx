@@ -469,12 +469,12 @@ export default function HealthRecordsOverview({
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <IndianRupee className="h-4 w-4 text-green-600" />
                 <span className="text-sm text-gray-600">Total Cost</span>
               </div>
-              <div className="text-lg font-bold text-green-900">
+              <div className="text-sm sm:text-lg font-bold text-green-900">
                 {formatCurrency(stats.totalCost)}
               </div>
             </CardContent>
