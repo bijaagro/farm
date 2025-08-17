@@ -881,7 +881,7 @@ export default function BreedingManager({
                                                     </div>
                                                   )}
                                                   {kid.markings && (
-                                                    <div className="col-span-2">
+                                                    <div className="sm:col-span-2">
                                                       <span className="text-gray-500">
                                                         Markings:
                                                       </span>
