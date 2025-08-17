@@ -1220,11 +1220,11 @@ export default function BreedingManager({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2 pt-4">
+                  <div className="flex flex-col sm:flex-row gap-2 pt-4">
                     <Button
                       type="submit"
                       disabled={submitting}
-                      className="bg-pink-600 hover:bg-pink-700"
+                      className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto"
                     >
                       {submitting ? "Creating..." : "Create Birth Record"}
                     </Button>
@@ -1233,6 +1233,7 @@ export default function BreedingManager({
                       variant="outline"
                       onClick={() => setIsDialogOpen(false)}
                       disabled={submitting}
+                      className="w-full sm:w-auto"
                     >
                       Cancel
                     </Button>
