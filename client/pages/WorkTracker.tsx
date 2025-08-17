@@ -464,7 +464,7 @@ export default function WorkTracker() {
           <CardContent className="p-4 sm:p-6">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3">
-                <div className="relative flex-1">
+                <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     placeholder="Search tasks..."
@@ -473,40 +473,42 @@ export default function WorkTracker() {
                     className="pl-10"
                   />
                 </div>
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className="w-full sm:w-40">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={filterCategory}
-                  onValueChange={setFilterCategory}
-                >
-                  <SelectTrigger className="w-full sm:w-40">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    <SelectItem value="animal-health">Animal Health</SelectItem>
-                    <SelectItem value="crop-management">
-                      Crop Management
-                    </SelectItem>
-                    <SelectItem value="equipment">Equipment</SelectItem>
-                    <SelectItem value="irrigation">Irrigation</SelectItem>
-                    <SelectItem value="harvesting">Harvesting</SelectItem>
-                    <SelectItem value="maintenance">Maintenance</SelectItem>
-                    <SelectItem value="general">General</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Select value={filterStatus} onValueChange={setFilterStatus}>
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    value={filterCategory}
+                    onValueChange={setFilterCategory}
+                  >
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Categories</SelectItem>
+                      <SelectItem value="animal-health">Animal Health</SelectItem>
+                      <SelectItem value="crop-management">
+                        Crop Management
+                      </SelectItem>
+                      <SelectItem value="equipment">Equipment</SelectItem>
+                      <SelectItem value="irrigation">Irrigation</SelectItem>
+                      <SelectItem value="harvesting">Harvesting</SelectItem>
+                      <SelectItem value="maintenance">Maintenance</SelectItem>
+                      <SelectItem value="general">General</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Dialog
                   open={isAddDialogOpen}
                   onOpenChange={setIsAddDialogOpen}
