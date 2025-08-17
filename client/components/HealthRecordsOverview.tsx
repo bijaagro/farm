@@ -755,7 +755,7 @@ export default function HealthRecordsOverview({
                                         {(record.diagnosis ||
                                           record.treatment ||
                                           record.medications) && (
-                                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm bg-white p-3 rounded border">
+                                          <div className="grid grid-cols-1 gap-3 text-xs sm:text-sm bg-white p-3 rounded border">
                                             {record.diagnosis && (
                                               <div>
                                                 <span className="font-medium text-gray-700">
