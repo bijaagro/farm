@@ -921,8 +921,8 @@ export default function BreedingManager({
                 <Plus className="h-5 w-5 text-green-600" />
                 Add New Birth Record
               </h3>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[400px]">
-                <form onSubmit={handleSubmit} className="space-y-4 pr-3">
+              <ScrollArea className="h-[calc(95vh-300px)] min-h-[250px] sm:min-h-[400px]">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                   {/* Breeding Details */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-gray-900">
