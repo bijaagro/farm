@@ -746,16 +746,16 @@ export default function WorkTracker() {
                       className="hover:shadow-md transition-shadow"
                     >
                       <CardContent className="p-6">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
-                              <h3 className="font-semibold text-lg">
+                              <h3 className="font-semibold text-base sm:text-lg truncate">
                                 {task.title}
                               </h3>
                               {getStatusIcon(task.status)}
                             </div>
                             {task.description && (
-                              <p className="text-gray-600 mb-3">
+                              <p className="text-gray-600 mb-3 text-sm sm:text-base">
                                 {task.description}
                               </p>
                             )}
