@@ -792,7 +792,7 @@ export default function WorkTracker() {
                               {task.notes && <div>Notes: {task.notes}</div>}
                             </div>
                           </div>
-                          <div className="flex flex-col gap-2 ml-4">
+                          <div className="flex flex-col sm:flex-row gap-2 sm:ml-4">
                             <div className="flex gap-2 mb-2">
                               <Button
                                 size="sm"
