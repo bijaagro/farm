@@ -1137,7 +1137,7 @@ export default function BreedingManager({
                                     </div>
                                   )}
                                   {kid.markings && (
-                                    <div className="col-span-2">
+                                    <div className="sm:col-span-2">
                                       <span className="text-gray-500">
                                         Markings:
                                       </span>
@@ -1146,7 +1146,7 @@ export default function BreedingManager({
                                       </span>
                                     </div>
                                   )}
-                                  <div className="col-span-2">
+                                  <div className="sm:col-span-2">
                                     <span className="text-green-600 text-xs">
                                       ✓ Will create animal record
                                     </span>
