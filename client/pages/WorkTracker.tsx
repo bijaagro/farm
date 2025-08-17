@@ -370,9 +370,9 @@ export default function WorkTracker() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-green-200">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to="/">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 mr-2" />
@@ -383,13 +383,13 @@ export default function WorkTracker() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F483f6e241d954aec88a0b40782122459%2F5254047a2582477b8e206724ecfff5b8?format=webp&width=800"
                   alt="Bija Farms Logo"
-                  className="h-12 w-auto"
+                  className="h-10 sm:h-12 w-auto"
                 />
                 <div>
-                  <h1 className="text-3xl font-bold text-green-800">
+                  <h1 className="text-xl sm:text-3xl font-bold text-green-800">
                     Bija Work Tracker
                   </h1>
-                  <p className="text-green-600">
+                  <p className="text-sm sm:text-base text-green-600">
                     Complete Farm Task Management
                   </p>
                 </div>
