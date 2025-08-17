@@ -706,7 +706,7 @@ export default function HealthRecordsOverview({
 
                                           <div className="flex items-center gap-1 sm:gap-2 self-start sm:self-auto">
                                             {record.cost && (
-                                              <div className="flex items-center gap-1 text-sm font-medium text-green-700">
+                                              <div className="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-700">
                                                 <IndianRupee className="h-3 w-3" />
                                                 {formatCurrency(record.cost)}
                                               </div>
@@ -717,7 +717,8 @@ export default function HealthRecordsOverview({
                                               onClick={() =>
                                                 handleEditRecord(record)
                                               }
-                                              className="h-8 w-8 p-0"
+                                              className="h-8 w-8 p-0 touch-manipulation"
+                                              title="Edit record"
                                             >
                                               <Edit className="h-3 w-3" />
                                             </Button>
@@ -727,7 +728,8 @@ export default function HealthRecordsOverview({
                                               onClick={() =>
                                                 handleDeleteRecord(record)
                                               }
-                                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 touch-manipulation"
+                                              title="Delete record"
                                             >
                                               <Trash2 className="h-3 w-3" />
                                             </Button>
