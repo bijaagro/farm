@@ -1065,7 +1065,7 @@ export default function BreedingManager({
                         </p>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+                      <div className="grid grid-cols-1 gap-3 max-h-80 sm:max-h-96 overflow-y-auto">
                         {formData.kids.map((kid, index) => (
                           <Card
                             key={index}
