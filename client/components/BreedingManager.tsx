@@ -640,7 +640,7 @@ export default function BreedingManager({
                             </CardHeader>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <CardContent className="p-4 pt-0">
+                            <CardContent className="p-3 sm:p-4 pt-0">
                               {record.kidDetails &&
                               record.kidDetails.length > 0 ? (
                                 <div className="space-y-3">
