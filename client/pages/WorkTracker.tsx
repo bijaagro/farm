@@ -370,9 +370,9 @@ export default function WorkTracker() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-green-200">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to="/">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 mr-2" />
@@ -383,13 +383,13 @@ export default function WorkTracker() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F483f6e241d954aec88a0b40782122459%2F5254047a2582477b8e206724ecfff5b8?format=webp&width=800"
                   alt="Bija Farms Logo"
-                  className="h-12 w-auto"
+                  className="h-10 sm:h-12 w-auto"
                 />
                 <div>
-                  <h1 className="text-3xl font-bold text-green-800">
+                  <h1 className="text-xl sm:text-3xl font-bold text-green-800">
                     Bija Work Tracker
                   </h1>
-                  <p className="text-green-600">
+                  <p className="text-sm sm:text-base text-green-600">
                     Complete Farm Task Management
                   </p>
                 </div>
@@ -399,9 +399,9 @@ export default function WorkTracker() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:py-8">
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-blue-800 flex items-center gap-2">
@@ -460,11 +460,11 @@ export default function WorkTracker() {
         </div>
 
         {/* Action Bar */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row gap-4 justify-between">
-              <div className="flex flex-col sm:flex-row gap-4 flex-1">
-                <div className="relative flex-1">
+        <Card className="mb-6 sm:mb-8">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
+                <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     placeholder="Search tasks..."
@@ -473,40 +473,42 @@ export default function WorkTracker() {
                     className="pl-10"
                   />
                 </div>
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className="w-full sm:w-40">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={filterCategory}
-                  onValueChange={setFilterCategory}
-                >
-                  <SelectTrigger className="w-full sm:w-40">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    <SelectItem value="animal-health">Animal Health</SelectItem>
-                    <SelectItem value="crop-management">
-                      Crop Management
-                    </SelectItem>
-                    <SelectItem value="equipment">Equipment</SelectItem>
-                    <SelectItem value="irrigation">Irrigation</SelectItem>
-                    <SelectItem value="harvesting">Harvesting</SelectItem>
-                    <SelectItem value="maintenance">Maintenance</SelectItem>
-                    <SelectItem value="general">General</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Select value={filterStatus} onValueChange={setFilterStatus}>
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    value={filterCategory}
+                    onValueChange={setFilterCategory}
+                  >
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Categories</SelectItem>
+                      <SelectItem value="animal-health">Animal Health</SelectItem>
+                      <SelectItem value="crop-management">
+                        Crop Management
+                      </SelectItem>
+                      <SelectItem value="equipment">Equipment</SelectItem>
+                      <SelectItem value="irrigation">Irrigation</SelectItem>
+                      <SelectItem value="harvesting">Harvesting</SelectItem>
+                      <SelectItem value="maintenance">Maintenance</SelectItem>
+                      <SelectItem value="general">General</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Dialog
                   open={isAddDialogOpen}
                   onOpenChange={setIsAddDialogOpen}
@@ -517,7 +519,7 @@ export default function WorkTracker() {
                       Add Task
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4">
                     <DialogHeader>
                       <DialogTitle>Add New Task</DialogTitle>
                       <DialogDescription>
@@ -550,7 +552,7 @@ export default function WorkTracker() {
                           placeholder="Task description"
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="category">Category</Label>
                           <Select
@@ -628,7 +630,7 @@ export default function WorkTracker() {
                           </Select>
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="priority">Priority</Label>
                           <Select
@@ -687,7 +689,7 @@ export default function WorkTracker() {
                           placeholder="Additional notes"
                         />
                       </div>
-                      <div className="flex gap-2 pt-4">
+                      <div className="flex flex-col sm:flex-row gap-2 pt-4">
                         <Button
                           onClick={addTask}
                           className="flex-1 bg-green-600 hover:bg-green-700"
@@ -744,16 +746,16 @@ export default function WorkTracker() {
                       className="hover:shadow-md transition-shadow"
                     >
                       <CardContent className="p-6">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
-                              <h3 className="font-semibold text-lg">
+                              <h3 className="font-semibold text-base sm:text-lg truncate">
                                 {task.title}
                               </h3>
                               {getStatusIcon(task.status)}
                             </div>
                             {task.description && (
-                              <p className="text-gray-600 mb-3">
+                              <p className="text-gray-600 mb-3 text-sm sm:text-base">
                                 {task.description}
                               </p>
                             )}
@@ -790,7 +792,7 @@ export default function WorkTracker() {
                               {task.notes && <div>Notes: {task.notes}</div>}
                             </div>
                           </div>
-                          <div className="flex flex-col gap-2 ml-4">
+                          <div className="flex flex-col sm:flex-row gap-2 sm:ml-4">
                             <div className="flex gap-2 mb-2">
                               <Button
                                 size="sm"
@@ -1065,7 +1067,7 @@ export default function WorkTracker() {
 
         {/* Edit Task Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="max-w-md">
+          <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4">
             <DialogHeader>
               <DialogTitle>Edit Task</DialogTitle>
               <DialogDescription>

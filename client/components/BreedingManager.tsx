@@ -541,21 +541,21 @@ export default function BreedingManager({
             <Rabbit className="h-4 w-4" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden">
+        <DialogContent className="w-[95vw] max-w-6xl max-h-[95vh] overflow-y-auto mx-2 sm:mx-4">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Baby className="h-5 w-5" />
-              Breeding & Offspring Management - {mother.name}
+            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Baby className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="truncate">Breeding & Offspring - {mother.name}</span>
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs sm:text-sm">
               Record births and manage offspring for {mother.name}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(95vh-120px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 max-h-[calc(95vh-160px)] overflow-hidden">
             {/* Breeding History */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
+            <div className="flex flex-col min-h-0">
+              <div className="flex items-center justify-between mb-3 flex-shrink-0">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-pink-600" />
                   Breeding History
@@ -567,7 +567,8 @@ export default function BreedingManager({
                   </Badge>
                 )}
               </div>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[400px] border rounded-md p-3">
+              <div className="flex-1 min-h-0 border rounded-md">
+                <ScrollArea className="h-[300px] sm:h-[400px] lg:h-[500px] p-2 sm:p-3">
                 {loading ? (
                   <div className="text-center py-8">
                     <div className="animate-spin h-6 w-6 border-2 border-pink-600 border-t-transparent rounded-full mx-auto mb-2"></div>
@@ -596,19 +597,19 @@ export default function BreedingManager({
                           onOpenChange={() => toggleRecordExpansion(record.id)}
                         >
                           <CollapsibleTrigger asChild>
-                            <CardHeader className="p-4 pb-2 cursor-pointer hover:bg-pink-50/50">
+                            <CardHeader className="p-3 sm:p-4 pb-2 cursor-pointer hover:bg-pink-50/50">
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                                   {expandedRecords.has(record.id) ? (
-                                    <ChevronDown className="h-4 w-4 text-pink-600" />
+                                    <ChevronDown className="h-4 w-4 text-pink-600 flex-shrink-0" />
                                   ) : (
-                                    <ChevronRight className="h-4 w-4 text-pink-600" />
+                                    <ChevronRight className="h-4 w-4 text-pink-600 flex-shrink-0" />
                                   )}
-                                  <Badge className="bg-pink-100 text-pink-800">
+                                  <Badge className="bg-pink-100 text-pink-800 text-xs">
                                     {record.totalKids} Kid
                                     {record.totalKids !== 1 ? "s" : ""}
                                   </Badge>
-                                  <span className="text-sm text-gray-600">
+                                  <span className="text-xs sm:text-sm text-gray-600">
                                     {formatDate(
                                       record.actualDeliveryDate ||
                                         record.breedingDate,
@@ -616,10 +617,12 @@ export default function BreedingManager({
                                   </span>
                                 </div>
                               </div>
-                              <div className="text-sm space-y-1 text-left">
+                              <div className="text-xs sm:text-sm space-y-1 text-left">
                                 <p>
                                   <strong>Father:</strong>{" "}
-                                  {getFatherName(record.fatherId)}
+                                  <span className="truncate">
+                                    {getFatherName(record.fatherId)}
+                                  </span>
                                 </p>
                                 {record.maleKids !== undefined &&
                                   record.femaleKids !== undefined && (
@@ -638,7 +641,7 @@ export default function BreedingManager({
                             </CardHeader>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <CardContent className="p-4 pt-0">
+                            <CardContent className="p-3 sm:p-4 pt-0">
                               {record.kidDetails &&
                               record.kidDetails.length > 0 ? (
                                 <div className="space-y-3">
@@ -692,7 +695,7 @@ export default function BreedingManager({
                                                     </Button>
                                                   </div>
                                                 </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div className="grid grid-cols-1 gap-3">
                                                   <div className="space-y-1">
                                                     <Label className="text-xs">
                                                       Name
@@ -855,7 +858,7 @@ export default function BreedingManager({
                                                     <Edit className="h-3 w-3" />
                                                   </Button>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs">
                                                   <div>
                                                     <span className="text-gray-500">
                                                       Gender:
@@ -879,7 +882,7 @@ export default function BreedingManager({
                                                     </div>
                                                   )}
                                                   {kid.markings && (
-                                                    <div className="col-span-2">
+                                                    <div className="sm:col-span-2">
                                                       <span className="text-gray-500">
                                                         Markings:
                                                       </span>
@@ -910,24 +913,26 @@ export default function BreedingManager({
                     ))}
                   </div>
                 )}
-              </ScrollArea>
+                </ScrollArea>
+              </div>
             </div>
 
             {/* New Breeding Record Form */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold flex items-center gap-2">
+            <div className="flex flex-col min-h-0">
+              <h3 className="text-lg font-semibold flex items-center gap-2 mb-3 flex-shrink-0">
                 <Plus className="h-5 w-5 text-green-600" />
                 Add New Birth Record
               </h3>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[400px]">
-                <form onSubmit={handleSubmit} className="space-y-4 pr-3">
+              <div className="flex-1 min-h-0">
+                <ScrollArea className="h-[300px] sm:h-[400px] lg:h-[500px]">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                   {/* Breeding Details */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-gray-900">
                       Breeding Information
                     </h4>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="fatherId">Father (Optional)</Label>
                         <Select
@@ -1016,10 +1021,10 @@ export default function BreedingManager({
 
                   {/* Kids Information */}
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-gray-900 flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <h4 className="font-medium text-gray-900 flex items-center gap-2 flex-wrap">
                         <Baby className="h-4 w-4 text-pink-600" />
-                        Kids Information
+                        <span>Kids Information</span>
                         <Badge
                           variant={
                             formData.kids.length > 1 ? "default" : "secondary"
@@ -1039,11 +1044,12 @@ export default function BreedingManager({
                         type="button"
                         onClick={() => setIsKidFormOpen(true)}
                         size="sm"
-                        className="bg-pink-600 hover:bg-pink-700 text-white"
+                        className="bg-pink-600 hover:bg-pink-700 text-white self-start sm:self-auto"
                         title="Click to add a new kid"
                       >
                         <Plus className="h-4 w-4 mr-1" />
-                        Add Kid
+                        <span className="hidden sm:inline">Add Kid</span>
+                        <span className="sm:hidden">Add</span>
                       </Button>
                     </div>
 
@@ -1063,7 +1069,7 @@ export default function BreedingManager({
                         </p>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+                      <div className="grid grid-cols-1 gap-3 max-h-80 sm:max-h-96 overflow-y-auto">
                         {formData.kids.map((kid, index) => (
                           <Card
                             key={index}
@@ -1114,7 +1120,7 @@ export default function BreedingManager({
                                     </Button>
                                   </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs">
                                   <div>
                                     <span className="text-gray-500">
                                       Gender:
@@ -1135,7 +1141,7 @@ export default function BreedingManager({
                                     </div>
                                   )}
                                   {kid.markings && (
-                                    <div className="col-span-2">
+                                    <div className="sm:col-span-2">
                                       <span className="text-gray-500">
                                         Markings:
                                       </span>
@@ -1144,7 +1150,7 @@ export default function BreedingManager({
                                       </span>
                                     </div>
                                   )}
-                                  <div className="col-span-2">
+                                  <div className="sm:col-span-2">
                                     <span className="text-green-600 text-xs">
                                       ✓ Will create animal record
                                     </span>
@@ -1217,11 +1223,11 @@ export default function BreedingManager({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2 pt-4">
+                  <div className="flex flex-col sm:flex-row gap-2 pt-4">
                     <Button
                       type="submit"
                       disabled={submitting}
-                      className="bg-pink-600 hover:bg-pink-700"
+                      className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto"
                     >
                       {submitting ? "Creating..." : "Create Birth Record"}
                     </Button>
@@ -1230,12 +1236,14 @@ export default function BreedingManager({
                       variant="outline"
                       onClick={() => setIsDialogOpen(false)}
                       disabled={submitting}
+                      className="w-full sm:w-auto"
                     >
                       Cancel
                     </Button>
                   </div>
                 </form>
-              </ScrollArea>
+                </ScrollArea>
+              </div>
             </div>
           </div>
         </DialogContent>

@@ -233,18 +233,18 @@ export default function MainPage() {
 
       {/* Header with Logo */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-green-200">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-center space-x-6">
+        <div className="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F483f6e241d954aec88a0b40782122459%2F5254047a2582477b8e206724ecfff5b8?format=webp&width=800"
               alt="Bija Farms Logo"
-              className="h-20 w-auto"
+              className="h-16 sm:h-20 w-auto"
             />
-            <div className="text-left">
-              <h1 className="text-4xl font-bold text-green-800 mb-2">
+            <div className="text-center sm:text-left">
+              <h1 className="text-2xl sm:text-4xl font-bold text-green-800 mb-1 sm:mb-2">
                 Bija Farms Management
               </h1>
-              <p className="text-green-600 text-lg">
+              <p className="text-green-600 text-sm sm:text-lg">
                 Integrated farming solutions for modern agriculture
               </p>
             </div>
@@ -253,8 +253,8 @@ export default function MainPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <main className="max-w-6xl mx-auto px-4 py-6 sm:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-12">
           {/* Expense Tracker Card */}
           <Card className="group hover:shadow-xl transition-all duration-300 border-2 border-green-200 hover:border-green-300 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
@@ -291,7 +291,7 @@ export default function MainPage() {
                   <h4 className="font-semibold text-blue-800 mb-3">
                     Financial Overview:
                   </h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="bg-white/60 p-3 rounded-lg">
                       <div className="flex items-center space-x-2 text-green-700 mb-1">
                         <TrendingUp className="h-4 w-4" />
@@ -488,7 +488,7 @@ export default function MainPage() {
                   <h4 className="font-semibold text-purple-800 mb-3">
                     Livestock Overview (Active Animals):
                   </h4>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="bg-white/60 p-3 rounded-lg">
                       <div className="flex items-center space-x-2 text-purple-700 mb-1">
                         <Users className="h-4 w-4" />
@@ -566,9 +566,9 @@ export default function MainPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-green-800 text-white py-8 mt-16">
+      <footer className="bg-green-800 text-white py-6 sm:py-8 mt-8 sm:mt-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-green-200">
+          <p className="text-green-200 text-sm sm:text-base">
             © 2024 Bija Farms. Integrated farming solutions for sustainable
             agriculture.
           </p>

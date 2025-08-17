@@ -455,50 +455,50 @@ export default function HealthRecordsOverview({
     <div className="space-y-6">
       {/* Health Statistics */}
       {stats && (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-blue-600" />
                 <span className="text-sm text-gray-600">Total Records</span>
               </div>
-              <div className="text-xl font-bold text-blue-900">
+              <div className="text-lg sm:text-xl font-bold text-blue-900">
                 {stats.totalRecords}
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <IndianRupee className="h-4 w-4 text-green-600" />
                 <span className="text-sm text-gray-600">Total Cost</span>
               </div>
-              <div className="text-lg font-bold text-green-900">
+              <div className="text-sm sm:text-lg font-bold text-green-900">
                 {formatCurrency(stats.totalCost)}
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-purple-600" />
                 <span className="text-sm text-gray-600">Recent (30d)</span>
               </div>
-              <div className="text-xl font-bold text-purple-900">
+              <div className="text-lg sm:text-xl font-bold text-purple-900">
                 {stats.recentRecords}
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-orange-600" />
                 <span className="text-sm text-gray-600">Upcoming</span>
               </div>
-              <div className="text-xl font-bold text-orange-900">
+              <div className="text-lg sm:text-xl font-bold text-orange-900">
                 {stats.upcomingCheckups}
               </div>
             </CardContent>
@@ -509,7 +509,7 @@ export default function HealthRecordsOverview({
               stats.overdueCheckups > 0 ? "border-red-200 bg-red-50" : ""
             }
           >
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <AlertCircle
                   className={`h-4 w-4 ${stats.overdueCheckups > 0 ? "text-red-600" : "text-gray-400"}`}
@@ -521,7 +521,7 @@ export default function HealthRecordsOverview({
                 </span>
               </div>
               <div
-                className={`text-xl font-bold ${stats.overdueCheckups > 0 ? "text-red-900" : "text-gray-900"}`}
+                className={`text-lg sm:text-xl font-bold ${stats.overdueCheckups > 0 ? "text-red-900" : "text-gray-900"}`}
               >
                 {stats.overdueCheckups}
               </div>
@@ -646,29 +646,29 @@ export default function HealthRecordsOverview({
                           <Collapsible key={descriptionGroup.id}>
                             <CollapsibleTrigger
                               onClick={() => toggleGroup(descriptionGroup.id)}
-                              className="w-full p-4 hover:bg-gray-50 transition-colors"
+                              className="w-full p-3 sm:p-4 hover:bg-gray-50 transition-colors"
                             >
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3 text-left">
+                                <div className="flex items-center gap-2 sm:gap-3 text-left flex-1 min-w-0">
                                   {isExpanded ? (
-                                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                                    <ChevronDown className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                   ) : (
-                                    <ChevronRight className="h-4 w-4 text-gray-500" />
+                                    <ChevronRight className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                   )}
-                                  <div>
-                                    <h4 className="text-md font-medium text-gray-800">
+                                  <div className="min-w-0 flex-1">
+                                    <h4 className="text-sm sm:text-md font-medium text-gray-800 truncate">
                                       {descriptionGroup.description}
                                     </h4>
                                     {vets.length > 0 && (
-                                      <div className="flex items-center gap-1 text-sm text-gray-600 mt-1">
-                                        <User className="h-3 w-3" />
-                                        <span>Vet: {vets.join(", ")}</span>
+                                      <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 mt-1">
+                                        <User className="h-3 w-3 flex-shrink-0" />
+                                        <span className="truncate">Vet: {vets.join(", ")}</span>
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-sm text-gray-500">
+                                <div className="flex items-center gap-2 flex-shrink-0">
+                                  <span className="text-xs sm:text-sm text-gray-500">
                                     {descriptionGroup.records.length} animal
                                     {descriptionGroup.records.length !== 1
                                       ? "s"
@@ -679,7 +679,7 @@ export default function HealthRecordsOverview({
                             </CollapsibleTrigger>
 
                             <CollapsibleContent>
-                              <div className="px-4 pb-4 space-y-3">
+                              <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-3">
                                 {descriptionGroup.records.map((record) => {
                                   const typeInfo = getRecordTypeInfo(
                                     record.recordType,
@@ -689,24 +689,24 @@ export default function HealthRecordsOverview({
                                   return (
                                     <div
                                       key={`${record.animalId}-${record.id}`}
-                                      className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors ml-6"
+                                      className="bg-gray-50 rounded-lg p-3 sm:p-4 hover:bg-gray-100 transition-colors ml-3 sm:ml-6"
                                     >
                                       <div className="space-y-3">
                                         {/* Animal Info - Prominent Display */}
-                                        <div className="flex items-center justify-between">
-                                          <div className="flex items-center gap-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                                             <Badge className={typeInfo.color}>
                                               <TypeIcon className="h-3 w-3 mr-1" />
                                               {typeInfo.label}
                                             </Badge>
-                                            <div className="text-lg font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">
+                                            <div className="text-sm sm:text-lg font-semibold text-blue-700 bg-blue-50 px-2 sm:px-3 py-1 rounded-full">
                                               {record.animalName}
                                             </div>
                                           </div>
 
-                                          <div className="flex items-center gap-2">
+                                          <div className="flex items-center gap-1 sm:gap-2 self-start sm:self-auto">
                                             {record.cost && (
-                                              <div className="flex items-center gap-1 text-sm font-medium text-green-700">
+                                              <div className="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-700">
                                                 <IndianRupee className="h-3 w-3" />
                                                 {formatCurrency(record.cost)}
                                               </div>
@@ -717,7 +717,8 @@ export default function HealthRecordsOverview({
                                               onClick={() =>
                                                 handleEditRecord(record)
                                               }
-                                              className="h-8 w-8 p-0"
+                                              className="h-8 w-8 p-0 touch-manipulation"
+                                              title="Edit record"
                                             >
                                               <Edit className="h-3 w-3" />
                                             </Button>
@@ -727,7 +728,8 @@ export default function HealthRecordsOverview({
                                               onClick={() =>
                                                 handleDeleteRecord(record)
                                               }
-                                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 touch-manipulation"
+                                              title="Delete record"
                                             >
                                               <Trash2 className="h-3 w-3" />
                                             </Button>
@@ -735,7 +737,7 @@ export default function HealthRecordsOverview({
                                         </div>
 
                                         {/* Details */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div className="grid grid-cols-1 gap-2 text-xs sm:text-sm">
                                           {record.nextCheckupDate && (
                                             <div className="flex items-center gap-1 text-gray-600">
                                               <Clock className="h-3 w-3" />
@@ -753,7 +755,7 @@ export default function HealthRecordsOverview({
                                         {(record.diagnosis ||
                                           record.treatment ||
                                           record.medications) && (
-                                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm bg-white p-3 rounded border">
+                                          <div className="grid grid-cols-1 gap-3 text-xs sm:text-sm bg-white p-3 rounded border">
                                             {record.diagnosis && (
                                               <div>
                                                 <span className="font-medium text-gray-700">
@@ -791,7 +793,7 @@ export default function HealthRecordsOverview({
 
                                         {/* Notes */}
                                         {record.notes && (
-                                          <div className="flex items-start gap-1 text-sm text-gray-700 bg-blue-50 p-3 rounded">
+                                          <div className="flex items-start gap-1 text-xs sm:text-sm text-gray-700 bg-blue-50 p-3 rounded">
                                             <FileText className="h-3 w-3 mt-0.5 flex-shrink-0" />
                                             <div>
                                               <span className="font-medium">
@@ -836,7 +838,7 @@ export default function HealthRecordsOverview({
 
       {/* Edit Health Record Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] overflow-y-auto mx-2 sm:mx-4">
           <DialogHeader>
             <DialogTitle>Edit Health Record</DialogTitle>
             <DialogDescription>
@@ -844,7 +846,7 @@ export default function HealthRecordsOverview({
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleUpdateRecord} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               <div className="space-y-2">
                 <Label htmlFor="recordType">Record Type *</Label>
                 <Select
@@ -914,7 +916,7 @@ export default function HealthRecordsOverview({
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               <div className="space-y-2">
                 <Label htmlFor="diagnosis">Diagnosis</Label>
                 <Textarea
@@ -964,7 +966,7 @@ export default function HealthRecordsOverview({
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               <div className="space-y-2">
                 <Label htmlFor="cost">Cost (₹)</Label>
                 <Input
@@ -1014,7 +1016,7 @@ export default function HealthRecordsOverview({
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
               <Button
                 type="button"
                 variant="outline"
