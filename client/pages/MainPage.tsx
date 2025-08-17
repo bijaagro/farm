@@ -291,7 +291,7 @@ export default function MainPage() {
                   <h4 className="font-semibold text-blue-800 mb-3">
                     Financial Overview:
                   </h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="bg-white/60 p-3 rounded-lg">
                       <div className="flex items-center space-x-2 text-green-700 mb-1">
                         <TrendingUp className="h-4 w-4" />
