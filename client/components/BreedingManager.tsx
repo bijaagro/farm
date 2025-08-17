@@ -567,7 +567,7 @@ export default function BreedingManager({
                   </Badge>
                 )}
               </div>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[400px] border rounded-md p-3">
+              <ScrollArea className="h-[calc(95vh-300px)] min-h-[250px] sm:min-h-[400px] border rounded-md p-2 sm:p-3">
                 {loading ? (
                   <div className="text-center py-8">
                     <div className="animate-spin h-6 w-6 border-2 border-pink-600 border-t-transparent rounded-full mx-auto mb-2"></div>
