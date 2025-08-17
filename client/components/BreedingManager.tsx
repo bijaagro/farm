@@ -541,7 +541,7 @@ export default function BreedingManager({
             <Rabbit className="h-4 w-4" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[95vw] max-w-6xl max-h-[95vh] overflow-hidden mx-2 sm:mx-4">
+        <DialogContent className="w-[95vw] max-w-6xl max-h-[95vh] overflow-y-auto mx-2 sm:mx-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
               <Baby className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -552,10 +552,10 @@ export default function BreedingManager({
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 h-[calc(95vh-120px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 max-h-[calc(95vh-160px)] overflow-hidden">
             {/* Breeding History */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
+            <div className="flex flex-col min-h-0">
+              <div className="flex items-center justify-between mb-3 flex-shrink-0">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-pink-600" />
                   Breeding History
@@ -567,7 +567,8 @@ export default function BreedingManager({
                   </Badge>
                 )}
               </div>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[250px] sm:min-h-[400px] border rounded-md p-2 sm:p-3">
+              <div className="flex-1 min-h-0 border rounded-md">
+                <ScrollArea className="h-[300px] sm:h-[400px] lg:h-[500px] p-2 sm:p-3">
                 {loading ? (
                   <div className="text-center py-8">
                     <div className="animate-spin h-6 w-6 border-2 border-pink-600 border-t-transparent rounded-full mx-auto mb-2"></div>
@@ -912,16 +913,18 @@ export default function BreedingManager({
                     ))}
                   </div>
                 )}
-              </ScrollArea>
+                </ScrollArea>
+              </div>
             </div>
 
             {/* New Breeding Record Form */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold flex items-center gap-2">
+            <div className="flex flex-col min-h-0">
+              <h3 className="text-lg font-semibold flex items-center gap-2 mb-3 flex-shrink-0">
                 <Plus className="h-5 w-5 text-green-600" />
                 Add New Birth Record
               </h3>
-              <ScrollArea className="h-[calc(95vh-300px)] min-h-[250px] sm:min-h-[400px]">
+              <div className="flex-1 min-h-0">
+                <ScrollArea className="h-[300px] sm:h-[400px] lg:h-[500px]">
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                   {/* Breeding Details */}
                   <div className="space-y-4">
@@ -1239,7 +1242,8 @@ export default function BreedingManager({
                     </Button>
                   </div>
                 </form>
-              </ScrollArea>
+                </ScrollArea>
+              </div>
             </div>
           </div>
         </DialogContent>
