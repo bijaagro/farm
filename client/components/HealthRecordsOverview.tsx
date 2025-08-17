@@ -793,7 +793,7 @@ export default function HealthRecordsOverview({
 
                                         {/* Notes */}
                                         {record.notes && (
-                                          <div className="flex items-start gap-1 text-sm text-gray-700 bg-blue-50 p-3 rounded">
+                                          <div className="flex items-start gap-1 text-xs sm:text-sm text-gray-700 bg-blue-50 p-3 rounded">
                                             <FileText className="h-3 w-3 mt-0.5 flex-shrink-0" />
                                             <div>
                                               <span className="font-medium">
