@@ -493,12 +493,12 @@ export default function HealthRecordsOverview({
           </Card>
 
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-orange-600" />
                 <span className="text-sm text-gray-600">Upcoming</span>
               </div>
-              <div className="text-xl font-bold text-orange-900">
+              <div className="text-lg sm:text-xl font-bold text-orange-900">
                 {stats.upcomingCheckups}
               </div>
             </CardContent>
