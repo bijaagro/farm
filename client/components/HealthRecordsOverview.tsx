@@ -457,12 +457,12 @@ export default function HealthRecordsOverview({
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           <Card>
-            <CardContent className="p-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-blue-600" />
                 <span className="text-sm text-gray-600">Total Records</span>
               </div>
-              <div className="text-xl font-bold text-blue-900">
+              <div className="text-lg sm:text-xl font-bold text-blue-900">
                 {stats.totalRecords}
               </div>
             </CardContent>
