@@ -857,7 +857,7 @@ export default function BreedingManager({
                                                     <Edit className="h-3 w-3" />
                                                   </Button>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs">
                                                   <div>
                                                     <span className="text-gray-500">
                                                       Gender:
