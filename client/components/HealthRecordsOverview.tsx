@@ -679,7 +679,7 @@ export default function HealthRecordsOverview({
                             </CollapsibleTrigger>
 
                             <CollapsibleContent>
-                              <div className="px-4 pb-4 space-y-3">
+                              <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-3">
                                 {descriptionGroup.records.map((record) => {
                                   const typeInfo = getRecordTypeInfo(
                                     record.recordType,
