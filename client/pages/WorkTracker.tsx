@@ -519,7 +519,7 @@ export default function WorkTracker() {
                       Add Task
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4">
                     <DialogHeader>
                       <DialogTitle>Add New Task</DialogTitle>
                       <DialogDescription>
