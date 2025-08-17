@@ -689,7 +689,7 @@ export default function WorkTracker() {
                           placeholder="Additional notes"
                         />
                       </div>
-                      <div className="flex gap-2 pt-4">
+                      <div className="flex flex-col sm:flex-row gap-2 pt-4">
                         <Button
                           onClick={addTask}
                           className="flex-1 bg-green-600 hover:bg-green-700"
