@@ -400,8 +400,8 @@ export default function BulkHealthRecordsManager({
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="description" className="text-sm">Description *</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
@@ -417,9 +417,9 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="veterinarianName">Veterinarian</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="veterinarianName" className="text-sm">Veterinarian</Label>
                     <Input
                       id="veterinarianName"
                       value={formData.veterinarianName}
@@ -433,8 +433,8 @@ export default function BulkHealthRecordsManager({
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="cost">Cost per animal (₹)</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="cost" className="text-sm">Cost per animal (₹)</Label>
                     <Input
                       id="cost"
                       type="number"
@@ -451,8 +451,8 @@ export default function BulkHealthRecordsManager({
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="diagnosis">Diagnosis</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="diagnosis" className="text-sm">Diagnosis</Label>
                   <Textarea
                     id="diagnosis"
                     value={formData.diagnosis}
@@ -467,8 +467,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="treatment">Treatment</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="treatment" className="text-sm">Treatment</Label>
                   <Textarea
                     id="treatment"
                     value={formData.treatment}
@@ -483,8 +483,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="medications">Medications</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="medications" className="text-sm">Medications</Label>
                   <Textarea
                     id="medications"
                     value={formData.medications}
@@ -499,8 +499,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="nextCheckupDate">Next Checkup Date</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="nextCheckupDate" className="text-sm">Next Checkup Date</Label>
                   <Input
                     id="nextCheckupDate"
                     type="date"
@@ -514,8 +514,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Additional Notes</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="notes" className="text-sm">Additional Notes</Label>
                   <Textarea
                     id="notes"
                     value={formData.notes}
