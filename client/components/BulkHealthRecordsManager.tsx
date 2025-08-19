@@ -315,7 +315,7 @@ export default function BulkHealthRecordsManager({
                 {filteredAnimals.map((animal) => (
                   <div
                     key={animal.id}
-                    className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                    className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
                       selectedAnimals.includes(animal.id)
                         ? "bg-blue-50 border-blue-200"
                         : "hover:bg-gray-50"
@@ -325,14 +325,15 @@ export default function BulkHealthRecordsManager({
                     <Checkbox
                       checked={selectedAnimals.includes(animal.id)}
                       onChange={() => handleSelectAnimal(animal.id)}
+                      className="scale-90 sm:scale-100"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                      <div className="flex items-center justify-between gap-1">
+                        <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                           {animal.name}
                         </p>
                         <Badge
-                          className={getStatusColor(animal.status)}
+                          className={`${getStatusColor(animal.status)} text-xs`}
                           size="sm"
                         >
                           {animal.status}
