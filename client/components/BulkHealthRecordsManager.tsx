@@ -213,38 +213,45 @@ export default function BulkHealthRecordsManager({
           Manage Health Records
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Stethoscope className="h-5 w-5" />
-            Bulk Health Records Management
-          </DialogTitle>
-          <DialogDescription>
-            Add health records to multiple animals at once
-          </DialogDescription>
-        </DialogHeader>
-{/* Actions */}
-        <Separator />
-        <div className="flex gap-2">
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting || selectedAnimals.length === 0}
-            className="bg-green-600 hover:bg-green-700"
-          >
-            {isSubmitting
-              ? "Adding..."
-              : `Add Records (${selectedAnimals.length})`}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsDialogOpen(false)}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
+      <DialogContent className="w-[95vw] max-w-4xl h-[90vh] max-h-[90vh] overflow-hidden p-0 sm:p-6">
+        <div className="p-4 sm:p-0">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Stethoscope className="h-5 w-5" />
+              Bulk Health Records Management
+            </DialogTitle>
+            <DialogDescription className="text-sm">
+              Add health records to multiple animals at once
+            </DialogDescription>
+          </DialogHeader>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(90vh-120px)]">
+
+        <Separator className="mx-4 sm:mx-0" />
+
+        <div className="px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button
+              onClick={handleSubmit}
+              disabled={isSubmitting || selectedAnimals.length === 0}
+              className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none"
+            >
+              {isSubmitting
+                ? "Adding..."
+                : `Add Records (${selectedAnimals.length})`}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsDialogOpen(false)}
+              disabled={isSubmitting}
+              className="flex-1 sm:flex-none"
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0 h-[calc(90vh-200px)] sm:h-[calc(90vh-160px)] overflow-hidden">
           {/* Animal Selection Panel */}
           <div className="space-y-4">
             <div className="space-y-3">
