@@ -703,6 +703,50 @@ export default function WorkTracker() {
                           placeholder="Person responsible"
                         />
                       </div>
+
+                      {/* Animal Selection for Health-Related Tasks */}
+                      {isHealthRelatedTask(newTask.taskType) && (
+                        <div>
+                          <Label htmlFor="selectedAnimals">Select Animals *</Label>
+                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto">
+                            {animals.length === 0 ? (
+                              <p className="text-gray-500 text-sm">No animals available</p>
+                            ) : (
+                              <div className="space-y-2">
+                                {animals.filter(animal => animal.status === 'active').map((animal) => (
+                                  <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={newTask.selectedAnimals.includes(animal.id)}
+                                      onChange={(e) => {
+                                        if (e.target.checked) {
+                                          setNewTask({
+                                            ...newTask,
+                                            selectedAnimals: [...newTask.selectedAnimals, animal.id]
+                                          });
+                                        } else {
+                                          setNewTask({
+                                            ...newTask,
+                                            selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
+                                          });
+                                        }
+                                      }}
+                                      className="rounded"
+                                    />
+                                    <span className="text-sm">{animal.name} ({animal.breed})</span>
+                                  </label>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          {newTask.selectedAnimals.length > 0 && (
+                            <p className="text-sm text-green-600 mt-1">
+                              {newTask.selectedAnimals.length} animal(s) selected
+                            </p>
+                          )}
+                        </div>
+                      )}
+
                       <div>
                         <Label htmlFor="notes">Notes</Label>
                         <Textarea
