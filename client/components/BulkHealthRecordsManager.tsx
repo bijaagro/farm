@@ -253,11 +253,11 @@ export default function BulkHealthRecordsManager({
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0 h-[calc(90vh-200px)] sm:h-[calc(90vh-160px)] overflow-hidden">
           {/* Animal Selection Panel */}
-          <div className="space-y-4">
-            <div className="space-y-3">
+          <div className="space-y-3 sm:space-y-4 overflow-hidden">
+            <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Select Animals</h3>
-                <Badge variant="secondary">
+                <h3 className="text-base sm:text-lg font-semibold">Select Animals</h3>
+                <Badge variant="secondary" className="text-xs">
                   {selectedAnimals.length} of {filteredAnimals.length} selected
                 </Badge>
               </div>
