@@ -361,9 +361,9 @@ export default function BulkHealthRecordsManager({
 
             <ScrollArea className="h-64 sm:h-80">
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="recordType">Record Type *</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="recordType" className="text-sm">Record Type *</Label>
                     <Select
                       value={formData.recordType}
                       onValueChange={(value) =>
