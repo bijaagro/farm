@@ -97,6 +97,7 @@ interface Task {
   notes: string;
   createdAt: string;
   completedAt?: string;
+  selectedAnimals?: string[];
 }
 
 const taskTypeColors = {
