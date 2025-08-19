@@ -150,27 +150,32 @@ export default function WorkTracker() {
     selectedAnimals: [] as string[],
   });
 
-  // Load tasks from API on component mount
+  // Load tasks and animals from API on component mount
   useEffect(() => {
-    const loadTasks = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
-        const data = await taskApi.fetchTasks();
-        console.log("Loaded tasks from API:", data.length);
-        setTasks(data);
-        setFilteredTasks(data);
+        const [tasksData, animalsData] = await Promise.all([
+          taskApi.fetchTasks(),
+          animalApi.fetchAnimals()
+        ]);
+        console.log("Loaded tasks from API:", tasksData.length);
+        console.log("Loaded animals from API:", animalsData.length);
+        setTasks(tasksData);
+        setFilteredTasks(tasksData);
+        setAnimals(animalsData);
       } catch (error) {
-        console.error("Error loading tasks:", error);
+        console.error("Error loading data:", error);
         toast({
           title: "Error",
-          description: "Failed to load tasks. Please try again.",
+          description: "Failed to load data. Please try again.",
           variant: "destructive",
         });
       } finally {
         setLoading(false);
       }
     };
-    loadTasks();
+    loadData();
   }, [toast]);
 
   // Filter tasks based on search and filters
