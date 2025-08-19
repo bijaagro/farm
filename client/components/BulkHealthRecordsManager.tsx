@@ -310,8 +310,8 @@ export default function BulkHealthRecordsManager({
             </div>
 
             {/* Animals List */}
-            <ScrollArea className="h-96 border rounded-md p-3">
-              <div className="space-y-2">
+            <ScrollArea className="h-64 sm:h-80 border rounded-md p-2 sm:p-3">
+              <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
                     key={animal.id}
