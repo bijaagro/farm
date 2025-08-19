@@ -156,6 +156,7 @@ export default function BulkHealthRecordsManager({
             | "treatment"
             | "illness"
             | "injury"
+            | "vaccination"
             | "other",
           date: formData.date,
           description: formData.description,
@@ -213,44 +214,51 @@ export default function BulkHealthRecordsManager({
           Manage Health Records
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Stethoscope className="h-5 w-5" />
-            Bulk Health Records Management
-          </DialogTitle>
-          <DialogDescription>
-            Add health records to multiple animals at once
-          </DialogDescription>
-        </DialogHeader>
-{/* Actions */}
-        <Separator />
-        <div className="flex gap-2">
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting || selectedAnimals.length === 0}
-            className="bg-green-600 hover:bg-green-700"
-          >
-            {isSubmitting
-              ? "Adding..."
-              : `Add Records (${selectedAnimals.length})`}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsDialogOpen(false)}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
+      <DialogContent className="w-[100vw] sm:w-[95vw] max-w-4xl h-[100vh] sm:h-[90vh] max-h-[100vh] sm:max-h-[90vh] overflow-hidden p-0 sm:p-6 m-0 sm:m-4 rounded-none sm:rounded-lg">
+        <div className="p-4 sm:p-0">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Stethoscope className="h-5 w-5" />
+              Bulk Health Records Management
+            </DialogTitle>
+            <DialogDescription className="text-sm">
+              Add health records to multiple animals at once
+            </DialogDescription>
+          </DialogHeader>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(90vh-120px)]">
+
+        <Separator className="mx-4 sm:mx-0" />
+
+        <div className="px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button
+              onClick={handleSubmit}
+              disabled={isSubmitting || selectedAnimals.length === 0}
+              className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none"
+            >
+              {isSubmitting
+                ? "Adding..."
+                : `Add Records (${selectedAnimals.length})`}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsDialogOpen(false)}
+              disabled={isSubmitting}
+              className="flex-1 sm:flex-none"
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0 h-[calc(100vh-200px)] sm:h-[calc(90vh-160px)] overflow-hidden">
           {/* Animal Selection Panel */}
-          <div className="space-y-4">
-            <div className="space-y-3">
+          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
+            <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Select Animals</h3>
-                <Badge variant="secondary">
+                <h3 className="text-base sm:text-lg font-semibold">Select Animals</h3>
+                <Badge variant="secondary" className="text-xs">
                   {selectedAnimals.length} of {filteredAnimals.length} selected
                 </Badge>
               </div>
@@ -303,12 +311,12 @@ export default function BulkHealthRecordsManager({
             </div>
 
             {/* Animals List */}
-            <ScrollArea className="h-96 border rounded-md p-3">
-              <div className="space-y-2">
+            <ScrollArea className="h-64 sm:h-80 border rounded-md p-2 sm:p-3">
+              <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
                     key={animal.id}
-                    className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                    className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
                       selectedAnimals.includes(animal.id)
                         ? "bg-blue-50 border-blue-200"
                         : "hover:bg-gray-50"
@@ -318,14 +326,15 @@ export default function BulkHealthRecordsManager({
                     <Checkbox
                       checked={selectedAnimals.includes(animal.id)}
                       onChange={() => handleSelectAnimal(animal.id)}
+                      className="scale-90 sm:scale-100"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                      <div className="flex items-center justify-between gap-1">
+                        <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                           {animal.name}
                         </p>
                         <Badge
-                          className={getStatusColor(animal.status)}
+                          className={`${getStatusColor(animal.status)} text-xs`}
                           size="sm"
                         >
                           {animal.status}
@@ -348,14 +357,14 @@ export default function BulkHealthRecordsManager({
           </div>
 
           {/* Health Record Form */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Health Record Details</h3>
+          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
+            <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
-            <ScrollArea className="h-96">
-              <form onSubmit={handleSubmit} className="space-y-4 pr-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="recordType">Record Type *</Label>
+            <ScrollArea className="h-64 sm:h-80 lg:h-80">
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="recordType" className="text-sm">Record Type *</Label>
                     <Select
                       value={formData.recordType}
                       onValueChange={(value) =>
@@ -370,13 +379,14 @@ export default function BulkHealthRecordsManager({
                         <SelectItem value="treatment">Treatment</SelectItem>
                         <SelectItem value="illness">Illness</SelectItem>
                         <SelectItem value="injury">Injury</SelectItem>
+                        <SelectItem value="vaccination">Vaccination</SelectItem>
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Date *</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="date" className="text-sm">Date *</Label>
                     <Input
                       id="date"
                       type="date"
@@ -392,8 +402,8 @@ export default function BulkHealthRecordsManager({
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="description" className="text-sm">Description *</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
@@ -409,9 +419,9 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="veterinarianName">Veterinarian</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="veterinarianName" className="text-sm">Veterinarian</Label>
                     <Input
                       id="veterinarianName"
                       value={formData.veterinarianName}
@@ -425,8 +435,8 @@ export default function BulkHealthRecordsManager({
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="cost">Cost per animal (₹)</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="cost" className="text-sm">Cost per animal (₹)</Label>
                     <Input
                       id="cost"
                       type="number"
@@ -443,8 +453,8 @@ export default function BulkHealthRecordsManager({
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="diagnosis">Diagnosis</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="diagnosis" className="text-sm">Diagnosis</Label>
                   <Textarea
                     id="diagnosis"
                     value={formData.diagnosis}
@@ -459,8 +469,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="treatment">Treatment</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="treatment" className="text-sm">Treatment</Label>
                   <Textarea
                     id="treatment"
                     value={formData.treatment}
@@ -475,8 +485,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="medications">Medications</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="medications" className="text-sm">Medications</Label>
                   <Textarea
                     id="medications"
                     value={formData.medications}
@@ -491,8 +501,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="nextCheckupDate">Next Checkup Date</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="nextCheckupDate" className="text-sm">Next Checkup Date</Label>
                   <Input
                     id="nextCheckupDate"
                     type="date"
@@ -506,8 +516,8 @@ export default function BulkHealthRecordsManager({
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Additional Notes</Label>
+                <div className="space-y-1 sm:space-y-2">
+                  <Label htmlFor="notes" className="text-sm">Additional Notes</Label>
                   <Textarea
                     id="notes"
                     value={formData.notes}

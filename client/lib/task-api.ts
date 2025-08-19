@@ -32,6 +32,8 @@ interface Task {
   createdAt: string;
   completedAt?: string;
   reminderSent?: boolean;
+  // Animal selection for health-related tasks
+  selectedAnimals?: string[]; // Array of animal IDs
 }
 
 import { apiGet, apiPost, apiPut, apiDelete, apiCall } from "./api-config";
