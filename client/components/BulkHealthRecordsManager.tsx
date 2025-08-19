@@ -383,8 +383,8 @@ export default function BulkHealthRecordsManager({
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Date *</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="date" className="text-sm">Date *</Label>
                     <Input
                       id="date"
                       type="date"
