@@ -202,6 +202,11 @@ export default function WorkTracker() {
     setFilteredTasks(filtered);
   }, [tasks, searchTerm, filterStatus, filterCategory]);
 
+  // Helper function to check if task type is health-related
+  const isHealthRelatedTask = (taskType: string) => {
+    return ["vaccination", "checkup", "treatment"].includes(taskType);
+  };
+
   const addTask = async () => {
     if (!newTask.title || !newTask.dueDate || !newTask.assignedTo) {
       toast({
