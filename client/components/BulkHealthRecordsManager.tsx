@@ -356,11 +356,11 @@ export default function BulkHealthRecordsManager({
           </div>
 
           {/* Health Record Form */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Health Record Details</h3>
+          <div className="space-y-3 sm:space-y-4 overflow-hidden">
+            <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
-            <ScrollArea className="h-96">
-              <form onSubmit={handleSubmit} className="space-y-4 pr-3">
+            <ScrollArea className="h-64 sm:h-80">
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="recordType">Record Type *</Label>
