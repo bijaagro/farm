@@ -147,6 +147,7 @@ export default function WorkTracker() {
     dueDate: "",
     assignedTo: "",
     notes: "",
+    selectedAnimals: [] as string[],
   });
 
   // Load tasks from API on component mount
