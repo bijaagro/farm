@@ -260,22 +260,55 @@ export default function WorkTracker() {
     newStatus: Task["status"],
   ) => {
     try {
+      const task = tasks.find(t => t.id === taskId);
       const updateData: Partial<Task> = { status: newStatus };
       if (newStatus === "completed") {
         updateData.completedAt = new Date().toISOString().split("T")[0];
       }
 
       const updatedTask = await taskApi.updateTask(taskId, updateData);
+
+      // Create health records for completed health-related tasks
+      if (newStatus === "completed" && task && isHealthRelatedTask(task.taskType) && task.selectedAnimals && task.selectedAnimals.length > 0) {
+        try {
+          // Create health records for each selected animal
+          const healthRecordPromises = task.selectedAnimals.map(animalId =>
+            animalApi.createHealthRecord({
+              animalId,
+              recordType: task.taskType === "vaccination" ? "vaccination" :
+                          task.taskType === "checkup" ? "checkup" : "treatment",
+              date: new Date().toISOString().split("T")[0],
+              description: `${task.title} - ${task.description || 'Completed via task management'}`,
+              notes: task.notes ? `Task Notes: ${task.notes}` : undefined,
+            })
+          );
+
+          await Promise.all(healthRecordPromises);
+
+          toast({
+            title: "Success",
+            description: `Task completed and health records created for ${task.selectedAnimals.length} animal(s)`,
+          });
+        } catch (healthRecordError) {
+          console.error("Error creating health records:", healthRecordError);
+          toast({
+            title: "Warning",
+            description: "Task completed but failed to create health records",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Success",
+          description: `Task marked as ${newStatus}`,
+        });
+      }
+
       const updatedTasks = tasks.map((task) =>
         task.id === taskId ? updatedTask : task,
       );
 
       setTasks(updatedTasks);
-
-      toast({
-        title: "Success",
-        description: `Task marked as ${newStatus}`,
-      });
     } catch (error) {
       console.error("Error updating task status:", error);
       toast({
