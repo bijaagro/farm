@@ -313,6 +313,7 @@ export default function HealthRecordsManager({
                       <SelectItem value="treatment">Treatment</SelectItem>
                       <SelectItem value="illness">Illness</SelectItem>
                       <SelectItem value="injury">Injury</SelectItem>
+                      <SelectItem value="vaccination">Vaccination</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
