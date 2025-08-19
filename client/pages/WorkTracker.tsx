@@ -217,6 +217,16 @@ export default function WorkTracker() {
       return;
     }
 
+    // Validate health-related tasks require animal selection
+    if (isHealthRelatedTask(newTask.taskType) && newTask.selectedAnimals.length === 0) {
+      toast({
+        title: "Error",
+        description: "Please select at least one animal for health-related tasks",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const createdTask = await taskApi.createTask({
       ...newTask,
       status: "pending",
