@@ -249,6 +249,7 @@ export default function WorkTracker() {
       dueDate: "",
       assignedTo: "",
       notes: "",
+      selectedAnimals: [],
     });
     setIsAddDialogOpen(false);
   };
