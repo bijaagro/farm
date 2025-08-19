@@ -156,6 +156,7 @@ export default function BulkHealthRecordsManager({
             | "treatment"
             | "illness"
             | "injury"
+            | "vaccination"
             | "other",
           date: formData.date,
           description: formData.description,
