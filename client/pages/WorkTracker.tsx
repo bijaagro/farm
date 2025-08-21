@@ -743,12 +743,31 @@ export default function WorkTracker() {
                       {isHealthRelatedTask(newTask.taskType) && (
                         <div>
                           <Label htmlFor="selectedAnimals">Select Animals *</Label>
+
+                          {/* Animal Search */}
+                          <div className="mt-2 relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input
+                              placeholder="Search animals..."
+                              value={animalSearchTerm}
+                              onChange={(e) => setAnimalSearchTerm(e.target.value)}
+                              className="pl-10"
+                            />
+                          </div>
+
                           <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto">
                             {animals.length === 0 ? (
                               <p className="text-gray-500 text-sm">No animals available</p>
                             ) : (
                               <div className="space-y-2">
-                                {animals.filter(animal => animal.status === 'active').map((animal) => (
+                                {animals
+                                  .filter(animal =>
+                                    animal.status === 'active' &&
+                                    (animal.name.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                     animal.breed.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                     animal.type.toLowerCase().includes(animalSearchTerm.toLowerCase()))
+                                  )
+                                  .map((animal) => (
                                   <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
                                     <input
                                       type="checkbox"
