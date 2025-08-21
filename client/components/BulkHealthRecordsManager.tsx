@@ -311,7 +311,7 @@ export default function BulkHealthRecordsManager({
             </div>
 
             {/* Animals List */}
-            <ScrollArea className="h-64 sm:h-80 border rounded-md p-2 sm:p-3">
+            <ScrollArea className="h-48 sm:h-64 lg:h-80 border rounded-md p-2 sm:p-3">
               <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
@@ -360,7 +360,7 @@ export default function BulkHealthRecordsManager({
           <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
-            <ScrollArea className="h-64 sm:h-80 lg:h-80">
+            <ScrollArea className="h-48 sm:h-64 lg:h-80">
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1 sm:space-y-2">
