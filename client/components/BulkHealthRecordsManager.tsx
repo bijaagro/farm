@@ -250,7 +250,7 @@ export default function BulkHealthRecordsManager({
           </div>
         </div>
 
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-[calc(95vh-200px)] sm:h-[calc(90vh-160px)] overflow-hidden">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-[70vh] sm:h-[calc(90vh-160px)] overflow-hidden">
           {/* Animal Selection Panel */}
           <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <div className="space-y-2 sm:space-y-3">
