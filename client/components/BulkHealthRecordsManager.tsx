@@ -355,7 +355,7 @@ export default function BulkHealthRecordsManager({
           </div>
 
           {/* Health Record Form */}
-          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
+          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
             <ScrollArea className="h-48 sm:h-64 lg:h-80">
