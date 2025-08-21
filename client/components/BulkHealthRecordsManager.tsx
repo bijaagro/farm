@@ -324,7 +324,6 @@ export default function BulkHealthRecordsManager({
                     <Checkbox
                       checked={selectedAnimals.includes(animal.id)}
                       onChange={() => handleSelectAnimal(animal.id)}
-                      className="scale-90 sm:scale-100"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
