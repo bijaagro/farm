@@ -133,6 +133,7 @@ export default function WorkTracker() {
   const [loading, setLoading] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [animalSearchTerm, setAnimalSearchTerm] = useState("");
   const { toast } = useToast();
 
   // Pagination for filtered tasks
