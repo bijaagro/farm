@@ -211,6 +211,12 @@ export default function HealthRecordsManager({
           color: "bg-orange-100 text-orange-800",
           label: "Injury",
         };
+      case "vaccination":
+        return {
+          icon: Plus, // Using Plus as vaccination icon
+          color: "bg-purple-100 text-purple-800",
+          label: "Vaccination",
+        };
       default:
         return {
           icon: FileText,
@@ -313,6 +319,7 @@ export default function HealthRecordsManager({
                       <SelectItem value="treatment">Treatment</SelectItem>
                       <SelectItem value="illness">Illness</SelectItem>
                       <SelectItem value="injury">Injury</SelectItem>
+                      <SelectItem value="vaccination">Vaccination</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>

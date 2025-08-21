@@ -61,6 +61,8 @@ import { Pagination } from "@/components/ui/pagination";
 import { ExportCSVButton } from "@/components/ExportButton";
 import { createTaskExportConfig } from "@/lib/export-configs";
 import * as taskApi from "@/lib/task-api";
+import * as animalApi from "@/lib/animal-api";
+import { AnimalRecord } from "@shared/animal-types";
 
 interface Task {
   id: string;
@@ -95,6 +97,7 @@ interface Task {
   notes: string;
   createdAt: string;
   completedAt?: string;
+  selectedAnimals?: string[];
 }
 
 const taskTypeColors = {
@@ -122,6 +125,7 @@ const priorityColors = {
 export default function WorkTracker() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+  const [animals, setAnimals] = useState<AnimalRecord[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterCategory, setFilterCategory] = useState<string>("all");
@@ -144,29 +148,35 @@ export default function WorkTracker() {
     dueDate: "",
     assignedTo: "",
     notes: "",
+    selectedAnimals: [] as string[],
   });
 
-  // Load tasks from API on component mount
+  // Load tasks and animals from API on component mount
   useEffect(() => {
-    const loadTasks = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
-        const data = await taskApi.fetchTasks();
-        console.log("Loaded tasks from API:", data.length);
-        setTasks(data);
-        setFilteredTasks(data);
+        const [tasksData, animalsData] = await Promise.all([
+          taskApi.fetchTasks(),
+          animalApi.fetchAnimals()
+        ]);
+        console.log("Loaded tasks from API:", tasksData.length);
+        console.log("Loaded animals from API:", animalsData.length);
+        setTasks(tasksData);
+        setFilteredTasks(tasksData);
+        setAnimals(animalsData);
       } catch (error) {
-        console.error("Error loading tasks:", error);
+        console.error("Error loading data:", error);
         toast({
           title: "Error",
-          description: "Failed to load tasks. Please try again.",
+          description: "Failed to load data. Please try again.",
           variant: "destructive",
         });
       } finally {
         setLoading(false);
       }
     };
-    loadTasks();
+    loadData();
   }, [toast]);
 
   // Filter tasks based on search and filters
@@ -193,11 +203,26 @@ export default function WorkTracker() {
     setFilteredTasks(filtered);
   }, [tasks, searchTerm, filterStatus, filterCategory]);
 
+  // Helper function to check if task type is health-related
+  const isHealthRelatedTask = (taskType: string) => {
+    return ["vaccination", "checkup", "treatment"].includes(taskType);
+  };
+
   const addTask = async () => {
     if (!newTask.title || !newTask.dueDate || !newTask.assignedTo) {
       toast({
         title: "Error",
         description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate health-related tasks require animal selection
+    if (isHealthRelatedTask(newTask.taskType) && newTask.selectedAnimals.length === 0) {
+      toast({
+        title: "Error",
+        description: "Please select at least one animal for health-related tasks",
         variant: "destructive",
       });
       return;
@@ -225,6 +250,7 @@ export default function WorkTracker() {
       dueDate: "",
       assignedTo: "",
       notes: "",
+      selectedAnimals: [],
     });
     setIsAddDialogOpen(false);
   };
@@ -234,22 +260,55 @@ export default function WorkTracker() {
     newStatus: Task["status"],
   ) => {
     try {
+      const task = tasks.find(t => t.id === taskId);
       const updateData: Partial<Task> = { status: newStatus };
       if (newStatus === "completed") {
         updateData.completedAt = new Date().toISOString().split("T")[0];
       }
 
       const updatedTask = await taskApi.updateTask(taskId, updateData);
+
+      // Create health records for completed health-related tasks
+      if (newStatus === "completed" && task && isHealthRelatedTask(task.taskType) && task.selectedAnimals && task.selectedAnimals.length > 0) {
+        try {
+          // Create health records for each selected animal
+          const healthRecordPromises = task.selectedAnimals.map(animalId =>
+            animalApi.createHealthRecord({
+              animalId,
+              recordType: task.taskType === "vaccination" ? "vaccination" :
+                          task.taskType === "checkup" ? "checkup" : "treatment",
+              date: new Date().toISOString().split("T")[0],
+              description: `${task.title} - ${task.description || 'Completed via task management'}`,
+              notes: task.notes ? `Task Notes: ${task.notes}` : undefined,
+            })
+          );
+
+          await Promise.all(healthRecordPromises);
+
+          toast({
+            title: "Success",
+            description: `Task completed and health records created for ${task.selectedAnimals.length} animal(s)`,
+          });
+        } catch (healthRecordError) {
+          console.error("Error creating health records:", healthRecordError);
+          toast({
+            title: "Warning",
+            description: "Task completed but failed to create health records",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Success",
+          description: `Task marked as ${newStatus}`,
+        });
+      }
+
       const updatedTasks = tasks.map((task) =>
         task.id === taskId ? updatedTask : task,
       );
 
       setTasks(updatedTasks);
-
-      toast({
-        title: "Success",
-        description: `Task marked as ${newStatus}`,
-      });
     } catch (error) {
       console.error("Error updating task status:", error);
       toast({
@@ -678,6 +737,50 @@ export default function WorkTracker() {
                           placeholder="Person responsible"
                         />
                       </div>
+
+                      {/* Animal Selection for Health-Related Tasks */}
+                      {isHealthRelatedTask(newTask.taskType) && (
+                        <div>
+                          <Label htmlFor="selectedAnimals">Select Animals *</Label>
+                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto">
+                            {animals.length === 0 ? (
+                              <p className="text-gray-500 text-sm">No animals available</p>
+                            ) : (
+                              <div className="space-y-2">
+                                {animals.filter(animal => animal.status === 'active').map((animal) => (
+                                  <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={newTask.selectedAnimals.includes(animal.id)}
+                                      onChange={(e) => {
+                                        if (e.target.checked) {
+                                          setNewTask({
+                                            ...newTask,
+                                            selectedAnimals: [...newTask.selectedAnimals, animal.id]
+                                          });
+                                        } else {
+                                          setNewTask({
+                                            ...newTask,
+                                            selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
+                                          });
+                                        }
+                                      }}
+                                      className="rounded"
+                                    />
+                                    <span className="text-sm">{animal.name} ({animal.breed})</span>
+                                  </label>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          {newTask.selectedAnimals.length > 0 && (
+                            <p className="text-sm text-green-600 mt-1">
+                              {newTask.selectedAnimals.length} animal(s) selected
+                            </p>
+                          )}
+                        </div>
+                      )}
+
                       <div>
                         <Label htmlFor="notes">Notes</Label>
                         <Textarea

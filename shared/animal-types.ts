@@ -103,7 +103,7 @@ export interface VaccinationRecord {
 export interface HealthRecord {
   id: string;
   animalId: string;
-  recordType: "checkup" | "treatment" | "illness" | "injury" | "other";
+  recordType: "checkup" | "treatment" | "illness" | "injury" | "vaccination" | "other";
   date: string;
   description: string;
   veterinarianName?: string;
