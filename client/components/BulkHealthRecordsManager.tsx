@@ -314,7 +314,7 @@ export default function BulkHealthRecordsManager({
                 {filteredAnimals.map((animal) => (
                   <div
                     key={animal.id}
-                    className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
+                    className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-colors min-h-[48px] ${
                       selectedAnimals.includes(animal.id)
                         ? "bg-blue-50 border-blue-200"
                         : "hover:bg-gray-50"
