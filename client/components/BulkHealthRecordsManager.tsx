@@ -215,21 +215,19 @@ export default function BulkHealthRecordsManager({
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full sm:w-[95vw] sm:max-w-4xl h-[95vh] sm:h-[90vh] max-h-[95vh] sm:max-h-[90vh] overflow-hidden p-4 sm:p-6 mx-2 sm:mx-4 my-2 sm:my-4 rounded-lg">
-        <div className="p-4 sm:p-0">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <Stethoscope className="h-5 w-5" />
-              Bulk Health Records Management
-            </DialogTitle>
-            <DialogDescription className="text-sm">
-              Add health records to multiple animals at once
-            </DialogDescription>
-          </DialogHeader>
-        </div>
+        <DialogHeader className="pb-4">
+          <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <Stethoscope className="h-5 w-5" />
+            Bulk Health Records Management
+          </DialogTitle>
+          <DialogDescription className="text-sm">
+            Add health records to multiple animals at once
+          </DialogDescription>
+        </DialogHeader>
 
-        <Separator className="mx-4 sm:mx-0" />
+        <Separator className="mb-4" />
 
-        <div className="px-4 sm:px-0">
+        <div>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button
               onClick={handleSubmit}
