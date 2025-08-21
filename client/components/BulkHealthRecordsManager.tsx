@@ -214,7 +214,7 @@ export default function BulkHealthRecordsManager({
           Manage Health Records
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[100vw] sm:w-[95vw] max-w-4xl h-[100vh] sm:h-[90vh] max-h-[100vh] sm:max-h-[90vh] overflow-hidden p-0 sm:p-6 m-0 sm:m-4 rounded-none sm:rounded-lg">
+      <DialogContent className="w-full sm:w-[95vw] sm:max-w-4xl h-[95vh] sm:h-[90vh] max-h-[95vh] sm:max-h-[90vh] overflow-hidden p-4 sm:p-6 mx-2 sm:mx-4 my-2 sm:my-4 rounded-lg">
         <div className="p-4 sm:p-0">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
