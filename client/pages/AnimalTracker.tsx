@@ -88,7 +88,11 @@ export default function AnimalTracker() {
   const [isHealthSectionExpanded, setIsHealthSectionExpanded] = useState(false);
   const [hasBreedingData, setHasBreedingData] = useState(false);
   const [breedingLoading, setBreedingLoading] = useState(true);
+  const [breedingRecords, setBreedingRecords] = useState<BreedingRecord[]>([]);
   const { toast } = useToast();
+
+  // Import BreedingRecord type
+  const { BreedingRecord } = require('@shared/animal-types');
 
   // Pagination for filtered animals
   const animalsPagination = usePagination(filteredAnimals, 12);
@@ -97,7 +101,7 @@ export default function AnimalTracker() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [animalsData, summaryData, breedingRecords] = await Promise.all([
+        const [animalsData, summaryData, breedingRecordsData] = await Promise.all([
           animalApi.fetchAnimals(),
           animalApi.fetchAnimalSummary(),
           animalApi.fetchBreedingRecords(),
@@ -105,7 +109,8 @@ export default function AnimalTracker() {
         setAnimals(animalsData);
         setFilteredAnimals(animalsData);
         setSummary(summaryData);
-        setHasBreedingData(breedingRecords.length > 0);
+        setBreedingRecords(breedingRecordsData);
+        setHasBreedingData(breedingRecordsData.length > 0);
       } catch (error) {
         console.error("Error loading animal data:", error);
         toast({
