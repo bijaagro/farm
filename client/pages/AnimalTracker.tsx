@@ -60,6 +60,7 @@ import {
   AnimalType,
   AnimalGender,
   AnimalStatus,
+  BreedingRecord,
 } from "@shared/animal-types";
 import * as animalApi from "@/lib/animal-api";
 import AnimalForm from "@/components/AnimalForm";
@@ -88,7 +89,38 @@ export default function AnimalTracker() {
   const [isHealthSectionExpanded, setIsHealthSectionExpanded] = useState(false);
   const [hasBreedingData, setHasBreedingData] = useState(false);
   const [breedingLoading, setBreedingLoading] = useState(true);
+  const [breedingRecords, setBreedingRecords] = useState<BreedingRecord[]>([]);
   const { toast } = useToast();
+
+  // Calculate breeding summary for an animal
+  const getBreedingSummary = (animal: AnimalRecord) => {
+    const offspringCount = animal.offspring?.length || 0;
+    const asMotherRecords = breedingRecords.filter(record => record.motherId === animal.id && record.actualDeliveryDate);
+    const asFatherRecords = breedingRecords.filter(record => record.fatherId === animal.id && record.actualDeliveryDate);
+
+    const totalBreedings = animal.gender === 'female' ? asMotherRecords.length : asFatherRecords.length;
+    const lastBreedingDate = animal.gender === 'female'
+      ? asMotherRecords.length > 0 ? Math.max(...asMotherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null
+      : asFatherRecords.length > 0 ? Math.max(...asFatherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null;
+
+    // Check if currently pregnant (for females)
+    const currentPregnancy = animal.gender === 'female'
+      ? breedingRecords.find(record =>
+          record.motherId === animal.id &&
+          record.expectedDeliveryDate &&
+          !record.actualDeliveryDate &&
+          new Date(record.expectedDeliveryDate) > new Date()
+        )
+      : null;
+
+    return {
+      offspringCount,
+      totalBreedings,
+      lastBreedingDate: lastBreedingDate ? new Date(lastBreedingDate) : null,
+      isPregnant: !!currentPregnancy,
+      expectedDeliveryDate: currentPregnancy?.expectedDeliveryDate
+    };
+  };
 
   // Pagination for filtered animals
   const animalsPagination = usePagination(filteredAnimals, 12);
@@ -97,7 +129,7 @@ export default function AnimalTracker() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [animalsData, summaryData, breedingRecords] = await Promise.all([
+        const [animalsData, summaryData, breedingRecordsData] = await Promise.all([
           animalApi.fetchAnimals(),
           animalApi.fetchAnimalSummary(),
           animalApi.fetchBreedingRecords(),
@@ -105,7 +137,8 @@ export default function AnimalTracker() {
         setAnimals(animalsData);
         setFilteredAnimals(animalsData);
         setSummary(summaryData);
-        setHasBreedingData(breedingRecords.length > 0);
+        setBreedingRecords(breedingRecordsData);
+        setHasBreedingData(breedingRecordsData.length > 0);
       } catch (error) {
         console.error("Error loading animal data:", error);
         toast({
@@ -492,7 +525,7 @@ export default function AnimalTracker() {
                       Add Animal
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+                  <DialogContent className="max-w-2xl mx-4">
                     <DialogHeader>
                       <DialogTitle>Add New Animal</DialogTitle>
                       <DialogDescription>
@@ -646,6 +679,62 @@ export default function AnimalTracker() {
                       )}
                     </div>
 
+                    {/* Breeding Summary */}
+                    {(() => {
+                      const breedingSummary = getBreedingSummary(animal);
+                      const hasBreedingInfo = breedingSummary.offspringCount > 0 || breedingSummary.isPregnant;
+
+                      if (!hasBreedingInfo) return null;
+
+                      return (
+                        <div className="border-t pt-3 mt-3">
+                          <div className="flex items-center gap-1 mb-2">
+                            <Baby className="h-4 w-4 text-pink-600" />
+                            <span className="text-sm font-medium text-pink-700">Breeding Summary</span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            {breedingSummary.offspringCount > 0 && (
+                              <div>
+                                <span className="text-gray-500">Offspring:</span>
+                                <div className="font-medium text-pink-700">
+                                  {breedingSummary.offspringCount} {breedingSummary.offspringCount === 1 ? 'kid' : 'kids'}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.totalBreedings > 0 && (
+                              <div>
+                                <span className="text-gray-500">{animal.gender === 'female' ? 'Births:' : 'Breedings:'}</span>
+                                <div className="font-medium text-pink-700">
+                                  {breedingSummary.totalBreedings} time{breedingSummary.totalBreedings !== 1 ? 's' : ''}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.isPregnant && (
+                              <div className="col-span-2">
+                                <div className="flex items-center gap-1">
+                                  <Heart className="h-3 w-3 text-red-500" />
+                                  <span className="text-xs font-medium text-red-600">Pregnant</span>
+                                  {breedingSummary.expectedDeliveryDate && (
+                                    <span className="text-xs text-gray-500">
+                                      (Due: {new Date(breedingSummary.expectedDeliveryDate).toLocaleDateString()})
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.lastBreedingDate && !breedingSummary.isPregnant && (
+                              <div className="col-span-2">
+                                <span className="text-gray-500">Last {animal.gender === 'female' ? 'Birth' : 'Breeding'}:</span>
+                                <div className="font-medium text-gray-700 text-xs">
+                                  {breedingSummary.lastBreedingDate.toLocaleDateString()}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     <div className="flex gap-2 flex-wrap">
                       <Button
                         size="sm"
@@ -668,14 +757,16 @@ export default function AnimalTracker() {
                             allAnimals={animals}
                             onUpdateAnimals={async () => {
                               try {
-                                const [animalsData, summaryData] =
+                                const [animalsData, summaryData, breedingRecordsData] =
                                   await Promise.all([
                                     animalApi.fetchAnimals(),
                                     animalApi.fetchAnimalSummary(),
+                                    animalApi.fetchBreedingRecords(),
                                   ]);
                                 setAnimals(animalsData);
                                 setFilteredAnimals(animalsData);
                                 setSummary(summaryData);
+                                setBreedingRecords(breedingRecordsData);
                               } catch (error) {
                                 console.error(
                                   "Error refreshing animal data:",
@@ -714,7 +805,7 @@ export default function AnimalTracker() {
         {/* Edit Animal Dialog */}
         {editingAnimal && (
           <Dialog open={true} onOpenChange={() => setEditingAnimal(null)}>
-            <DialogContent className="max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl mx-4">
               <DialogHeader>
                 <DialogTitle>Edit Animal</DialogTitle>
                 <DialogDescription>
@@ -734,7 +825,7 @@ export default function AnimalTracker() {
         {/* View Animal Dialog */}
         {viewingAnimal && (
           <Dialog open={true} onOpenChange={() => setViewingAnimal(null)}>
-            <DialogContent className="max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl mx-4">
               <VisuallyHidden>
                 <DialogTitle>View Animal - {viewingAnimal.name}</DialogTitle>
               </VisuallyHidden>
@@ -748,13 +839,15 @@ export default function AnimalTracker() {
                 onClose={() => setViewingAnimal(null)}
                 onUpdate={async () => {
                   try {
-                    const [animalsData, summaryData] = await Promise.all([
+                    const [animalsData, summaryData, breedingRecordsData] = await Promise.all([
                       animalApi.fetchAnimals(),
                       animalApi.fetchAnimalSummary(),
+                      animalApi.fetchBreedingRecords(),
                     ]);
                     setAnimals(animalsData);
                     setFilteredAnimals(animalsData);
                     setSummary(summaryData);
+                    setBreedingRecords(breedingRecordsData);
                   } catch (error) {
                     console.error("Error refreshing animal data:", error);
                   }

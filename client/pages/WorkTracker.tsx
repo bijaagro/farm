@@ -63,6 +63,7 @@ import { createTaskExportConfig } from "@/lib/export-configs";
 import * as taskApi from "@/lib/task-api";
 import * as animalApi from "@/lib/animal-api";
 import { AnimalRecord } from "@shared/animal-types";
+import "../scrollbar-styles.css";
 
 interface Task {
   id: string;
@@ -580,7 +581,7 @@ export default function WorkTracker() {
                       Add Task
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4">
+                  <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4 task-dialog-content">
                     <DialogHeader>
                       <DialogTitle>Add New Task</DialogTitle>
                       <DialogDescription>
@@ -756,7 +757,7 @@ export default function WorkTracker() {
                             />
                           </div>
 
-                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto">
+                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto task-animal-list">
                             {animals.length === 0 ? (
                               <p className="text-gray-500 text-sm">No animals available</p>
                             ) : (
@@ -1202,7 +1203,7 @@ export default function WorkTracker() {
 
         {/* Edit Task Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4">
+          <DialogContent className="w-[95vw] max-w-md mx-2 sm:mx-4 task-dialog-content">
             <DialogHeader>
               <DialogTitle>Edit Task</DialogTitle>
               <DialogDescription>
