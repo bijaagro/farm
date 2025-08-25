@@ -759,38 +759,49 @@ export default function WorkTracker() {
                             {animals.length === 0 ? (
                               <p className="text-gray-500 text-sm">No animals available</p>
                             ) : (
-                              <div className="space-y-2">
-                                {animals
-                                  .filter(animal =>
-                                    animal.status === 'active' &&
-                                    (animal.name.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
-                                     animal.breed.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
-                                     animal.type.toLowerCase().includes(animalSearchTerm.toLowerCase()))
-                                  )
-                                  .map((animal) => (
-                                  <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
-                                    <input
-                                      type="checkbox"
-                                      checked={newTask.selectedAnimals.includes(animal.id)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setNewTask({
-                                            ...newTask,
-                                            selectedAnimals: [...newTask.selectedAnimals, animal.id]
-                                          });
-                                        } else {
-                                          setNewTask({
-                                            ...newTask,
-                                            selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
-                                          });
-                                        }
-                                      }}
-                                      className="rounded"
-                                    />
-                                    <span className="text-sm">{animal.name} ({animal.breed})</span>
-                                  </label>
-                                ))}
-                              </div>
+                              (() => {
+                                const filteredAnimals = animals.filter(animal =>
+                                  animal.status === 'active' &&
+                                  (animal.name.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                   animal.breed.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                   animal.type.toLowerCase().includes(animalSearchTerm.toLowerCase()))
+                                );
+
+                                return filteredAnimals.length === 0 ? (
+                                  <div className="text-center py-4">
+                                    <Users className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                                    <p className="text-gray-500 text-sm">
+                                      {animalSearchTerm ? 'No animals match your search' : 'No active animals available'}
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-2">
+                                    {filteredAnimals.map((animal) => (
+                                      <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
+                                        <input
+                                          type="checkbox"
+                                          checked={newTask.selectedAnimals.includes(animal.id)}
+                                          onChange={(e) => {
+                                            if (e.target.checked) {
+                                              setNewTask({
+                                                ...newTask,
+                                                selectedAnimals: [...newTask.selectedAnimals, animal.id]
+                                              });
+                                            } else {
+                                              setNewTask({
+                                                ...newTask,
+                                                selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
+                                              });
+                                            }
+                                          }}
+                                          className="rounded"
+                                        />
+                                        <span className="text-sm">{animal.name} ({animal.breed})</span>
+                                      </label>
+                                    ))}
+                                  </div>
+                                );
+                              })()
                             )}
                           </div>
                           {newTask.selectedAnimals.length > 0 && (
