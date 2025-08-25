@@ -57,7 +57,7 @@ import {
 import { DataTable } from "@/components/DataTable";
 import { ExpenseForm } from "@/components/ExpenseForm";
 import { ExpenseCharts } from "@/components/ExpenseCharts";
-import { ClearCacheButton } from "@/components/ClearCacheButton";
+
 import { CategoryManager } from "@/components/CategoryManager";
 
 import { useToast } from "@/hooks/use-toast";
@@ -553,21 +553,6 @@ export default function Index() {
               {/* Action Buttons Row */}
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="flex gap-2 flex-wrap">
-                  <Button
-                    variant="outline"
-                    onClick={handleRefreshData}
-                    disabled={loading}
-                    size="sm"
-                    className="flex-1 sm:flex-none"
-                  >
-                    <RefreshCw
-                      className={`h-4 w-4 sm:mr-2 ${loading ? "animate-spin" : ""}`}
-                    />
-                    <span className="hidden sm:inline">Refresh</span>
-                  </Button>
-
-                  <ClearCacheButton />
-
                   <CategoryManager
                     onCategoriesUpdate={handleCategoriesUpdate}
                   />
