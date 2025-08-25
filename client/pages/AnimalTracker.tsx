@@ -60,6 +60,7 @@ import {
   AnimalType,
   AnimalGender,
   AnimalStatus,
+  BreedingRecord,
 } from "@shared/animal-types";
 import * as animalApi from "@/lib/animal-api";
 import AnimalForm from "@/components/AnimalForm";
@@ -91,8 +92,35 @@ export default function AnimalTracker() {
   const [breedingRecords, setBreedingRecords] = useState<BreedingRecord[]>([]);
   const { toast } = useToast();
 
-  // Import BreedingRecord type
-  const { BreedingRecord } = require('@shared/animal-types');
+  // Calculate breeding summary for an animal
+  const getBreedingSummary = (animal: AnimalRecord) => {
+    const offspringCount = animal.offspring?.length || 0;
+    const asMotherRecords = breedingRecords.filter(record => record.motherId === animal.id && record.actualDeliveryDate);
+    const asFatherRecords = breedingRecords.filter(record => record.fatherId === animal.id && record.actualDeliveryDate);
+
+    const totalBreedings = animal.gender === 'female' ? asMotherRecords.length : asFatherRecords.length;
+    const lastBreedingDate = animal.gender === 'female'
+      ? asMotherRecords.length > 0 ? Math.max(...asMotherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null
+      : asFatherRecords.length > 0 ? Math.max(...asFatherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null;
+
+    // Check if currently pregnant (for females)
+    const currentPregnancy = animal.gender === 'female'
+      ? breedingRecords.find(record =>
+          record.motherId === animal.id &&
+          record.expectedDeliveryDate &&
+          !record.actualDeliveryDate &&
+          new Date(record.expectedDeliveryDate) > new Date()
+        )
+      : null;
+
+    return {
+      offspringCount,
+      totalBreedings,
+      lastBreedingDate: lastBreedingDate ? new Date(lastBreedingDate) : null,
+      isPregnant: !!currentPregnancy,
+      expectedDeliveryDate: currentPregnancy?.expectedDeliveryDate
+    };
+  };
 
   // Pagination for filtered animals
   const animalsPagination = usePagination(filteredAnimals, 12);
