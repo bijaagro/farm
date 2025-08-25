@@ -397,13 +397,30 @@ export default function BreedingManager({
           <div className="max-h-[calc(95vh-160px)] overflow-hidden">
             <ScrollArea className="h-[600px] pr-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Breeding Details */}
+                  {/* Birth Information */}
                   <div className="space-y-4">
-                    <h4 className="font-medium text-gray-900">
-                      Breeding Information
+                    <h4 className="font-medium text-gray-900 flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-pink-600" />
+                      Birth Information
                     </h4>
 
-                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="actualDeliveryDate">Birth Date *</Label>
+                        <Input
+                          id="actualDeliveryDate"
+                          type="date"
+                          value={formData.actualDeliveryDate}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              actualDeliveryDate: e.target.value,
+                            }))
+                          }
+                          required
+                        />
+                      </div>
+
                       <div className="space-y-2">
                         <Label htmlFor="fatherId">Father (Optional)</Label>
                         <Select
@@ -430,61 +447,6 @@ export default function BreedingManager({
                           </SelectContent>
                         </Select>
                       </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="breedingDate">
-                          Breeding Date (Optional)
-                        </Label>
-                        <Input
-                          id="breedingDate"
-                          type="date"
-                          value={formData.breedingDate}
-                          onChange={(e) =>
-                            handleBreedingDateChange(e.target.value)
-                          }
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="actualDeliveryDate">Birth Date *</Label>
-                        <Input
-                          id="actualDeliveryDate"
-                          type="date"
-                          value={formData.actualDeliveryDate}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              actualDeliveryDate: e.target.value,
-                            }))
-                          }
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="breedingMethod">Breeding Method</Label>
-                        <Select
-                          value={formData.breedingMethod}
-                          onValueChange={(value) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              breedingMethod: value as
-                                | "natural"
-                                | "artificial_insemination",
-                            }))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="natural">Natural</SelectItem>
-                            <SelectItem value="artificial_insemination">
-                              Artificial Insemination
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
                     </div>
                   </div>
 
@@ -495,7 +457,7 @@ export default function BreedingManager({
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                       <h4 className="font-medium text-gray-900 flex items-center gap-2 flex-wrap">
                         <Baby className="h-4 w-4 text-pink-600" />
-                        <span>Kids Information</span>
+                        <span>Kids Details</span>
                         <Badge
                           variant={
                             formData.kids.length > 1 ? "default" : "secondary"
@@ -532,11 +494,10 @@ export default function BreedingManager({
                           No kids added yet
                         </p>
                         <p className="text-pink-500 text-sm mb-2">
-                          Click "Add Kid" to record offspring details
+                          Click "Add Kid" to record each offspring
                         </p>
                         <p className="text-pink-400 text-xs">
-                          💡 For multiple births (twins, triplets, etc.), click
-                          "Add Kid" multiple times
+                          💡 For twins, triplets, etc., add each kid separately
                         </p>
                       </div>
                     ) : (
@@ -637,46 +598,16 @@ export default function BreedingManager({
 
                   <Separator />
 
-                  {/* Additional Information */}
+                  {/* Notes Section */}
                   <div className="space-y-4">
-                    <h4 className="font-medium text-gray-900">
-                      Additional Information
+                    <h4 className="font-medium text-gray-900 flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-gray-600" />
+                      Additional Notes (Optional)
                     </h4>
 
                     <div className="space-y-3">
                       <div className="space-y-2">
-                        <Label htmlFor="veterinarianName">Veterinarian</Label>
-                        <Input
-                          id="veterinarianName"
-                          value={formData.veterinarianName}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              veterinarianName: e.target.value,
-                            }))
-                          }
-                          placeholder="Attending veterinarian"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="complications">Complications</Label>
-                        <Textarea
-                          id="complications"
-                          value={formData.complications}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              complications: e.target.value,
-                            }))
-                          }
-                          placeholder="Any birth complications"
-                          rows={2}
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="notes">Notes</Label>
+                        <Label htmlFor="notes">Birth Notes</Label>
                         <Textarea
                           id="notes"
                           value={formData.notes}
@@ -686,7 +617,7 @@ export default function BreedingManager({
                               notes: e.target.value,
                             }))
                           }
-                          placeholder="Additional notes"
+                          placeholder="Any additional information about the birth..."
                           rows={2}
                         />
                       </div>
@@ -694,13 +625,13 @@ export default function BreedingManager({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-col sm:flex-row gap-2 pt-4">
+                  <div className="flex flex-col sm:flex-row gap-2 pt-6 border-t">
                     <Button
                       type="submit"
-                      disabled={submitting}
+                      disabled={submitting || formData.kids.length === 0}
                       className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto"
                     >
-                      {submitting ? "Creating..." : "Create Birth Record"}
+                      {submitting ? "Adding Kids..." : `Add ${formData.kids.length} Kid${formData.kids.length !== 1 ? 's' : ''}`}
                     </Button>
                     <Button
                       type="button"
