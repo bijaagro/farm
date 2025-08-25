@@ -252,7 +252,7 @@ export default function BulkHealthRecordsManager({
 
         <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 flex-1 min-h-0">
           {/* Animal Selection Panel */}
-          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
+          <div className="space-y-3 sm:space-y-4 flex flex-col flex-1 md:flex-none min-h-0">
             <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-base sm:text-lg font-semibold">Select Animals</h3>
@@ -356,7 +356,7 @@ export default function BulkHealthRecordsManager({
           </div>
 
           {/* Health Record Form */}
-          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
+          <div className="space-y-3 sm:space-y-4 flex flex-col flex-1 md:flex-none min-h-0">
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
             <div className="flex-1 min-h-0">
