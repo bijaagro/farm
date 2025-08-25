@@ -214,22 +214,20 @@ export default function BulkHealthRecordsManager({
           Manage Health Records
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[100vw] sm:w-[95vw] max-w-4xl h-[100vh] sm:h-[90vh] max-h-[100vh] sm:max-h-[90vh] overflow-hidden p-0 sm:p-6 m-0 sm:m-4 rounded-none sm:rounded-lg">
-        <div className="p-4 sm:p-0">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <Stethoscope className="h-5 w-5" />
-              Bulk Health Records Management
-            </DialogTitle>
-            <DialogDescription className="text-sm">
-              Add health records to multiple animals at once
-            </DialogDescription>
-          </DialogHeader>
-        </div>
+      <DialogContent className="w-full sm:w-[95vw] sm:max-w-4xl h-[95vh] sm:h-[90vh] max-h-[95vh] sm:max-h-[90vh] overflow-hidden p-4 sm:p-6 mx-2 sm:mx-4 my-2 sm:my-4 rounded-lg">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <Stethoscope className="h-5 w-5" />
+            Bulk Health Records Management
+          </DialogTitle>
+          <DialogDescription className="text-sm">
+            Add health records to multiple animals at once
+          </DialogDescription>
+        </DialogHeader>
 
-        <Separator className="mx-4 sm:mx-0" />
+        <Separator className="mb-4" />
 
-        <div className="px-4 sm:px-0">
+        <div>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button
               onClick={handleSubmit}
@@ -252,9 +250,9 @@ export default function BulkHealthRecordsManager({
           </div>
         </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0 h-[calc(100vh-200px)] sm:h-[calc(90vh-160px)] overflow-hidden">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-[70vh] sm:h-[calc(90vh-160px)] overflow-hidden">
           {/* Animal Selection Panel */}
-          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
+          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-base sm:text-lg font-semibold">Select Animals</h3>
@@ -311,12 +309,12 @@ export default function BulkHealthRecordsManager({
             </div>
 
             {/* Animals List */}
-            <ScrollArea className="h-64 sm:h-80 border rounded-md p-2 sm:p-3">
+            <ScrollArea className="h-48 md:h-64 border rounded-md p-3">
               <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
                     key={animal.id}
-                    className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
+                    className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-colors min-h-[48px] ${
                       selectedAnimals.includes(animal.id)
                         ? "bg-blue-50 border-blue-200"
                         : "hover:bg-gray-50"
@@ -326,7 +324,6 @@ export default function BulkHealthRecordsManager({
                     <Checkbox
                       checked={selectedAnimals.includes(animal.id)}
                       onChange={() => handleSelectAnimal(animal.id)}
-                      className="scale-90 sm:scale-100"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
@@ -357,10 +354,10 @@ export default function BulkHealthRecordsManager({
           </div>
 
           {/* Health Record Form */}
-          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 lg:flex-none min-h-0">
+          <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
-            <ScrollArea className="h-64 sm:h-80 lg:h-80">
+            <ScrollArea className="h-48 md:h-64">
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1 sm:space-y-2">

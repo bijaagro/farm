@@ -133,6 +133,7 @@ export default function WorkTracker() {
   const [loading, setLoading] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [animalSearchTerm, setAnimalSearchTerm] = useState("");
   const { toast } = useToast();
 
   // Pagination for filtered tasks
@@ -252,6 +253,7 @@ export default function WorkTracker() {
       notes: "",
       selectedAnimals: [],
     });
+    setAnimalSearchTerm("");
     setIsAddDialogOpen(false);
   };
 
@@ -742,35 +744,65 @@ export default function WorkTracker() {
                       {isHealthRelatedTask(newTask.taskType) && (
                         <div>
                           <Label htmlFor="selectedAnimals">Select Animals *</Label>
+
+                          {/* Animal Search */}
+                          <div className="mt-2 relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input
+                              placeholder="Search animals..."
+                              value={animalSearchTerm}
+                              onChange={(e) => setAnimalSearchTerm(e.target.value)}
+                              className="pl-10"
+                            />
+                          </div>
+
                           <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto">
                             {animals.length === 0 ? (
                               <p className="text-gray-500 text-sm">No animals available</p>
                             ) : (
-                              <div className="space-y-2">
-                                {animals.filter(animal => animal.status === 'active').map((animal) => (
-                                  <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
-                                    <input
-                                      type="checkbox"
-                                      checked={newTask.selectedAnimals.includes(animal.id)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setNewTask({
-                                            ...newTask,
-                                            selectedAnimals: [...newTask.selectedAnimals, animal.id]
-                                          });
-                                        } else {
-                                          setNewTask({
-                                            ...newTask,
-                                            selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
-                                          });
-                                        }
-                                      }}
-                                      className="rounded"
-                                    />
-                                    <span className="text-sm">{animal.name} ({animal.breed})</span>
-                                  </label>
-                                ))}
-                              </div>
+                              (() => {
+                                const filteredAnimals = animals.filter(animal =>
+                                  animal.status === 'active' &&
+                                  (animal.name.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                   animal.breed.toLowerCase().includes(animalSearchTerm.toLowerCase()) ||
+                                   animal.type.toLowerCase().includes(animalSearchTerm.toLowerCase()))
+                                );
+
+                                return filteredAnimals.length === 0 ? (
+                                  <div className="text-center py-4">
+                                    <Users className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                                    <p className="text-gray-500 text-sm">
+                                      {animalSearchTerm ? 'No animals match your search' : 'No active animals available'}
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-2">
+                                    {filteredAnimals.map((animal) => (
+                                      <label key={animal.id} className="flex items-center space-x-2 cursor-pointer">
+                                        <input
+                                          type="checkbox"
+                                          checked={newTask.selectedAnimals.includes(animal.id)}
+                                          onChange={(e) => {
+                                            if (e.target.checked) {
+                                              setNewTask({
+                                                ...newTask,
+                                                selectedAnimals: [...newTask.selectedAnimals, animal.id]
+                                              });
+                                            } else {
+                                              setNewTask({
+                                                ...newTask,
+                                                selectedAnimals: newTask.selectedAnimals.filter(id => id !== animal.id)
+                                              });
+                                            }
+                                          }}
+                                          className="rounded"
+                                        />
+                                        <span className="text-sm">{animal.name} ({animal.breed})</span>
+                                      </label>
+                                    ))}
+                                  </div>
+                                );
+                              })()
                             )}
                           </div>
                           {newTask.selectedAnimals.length > 0 && (
