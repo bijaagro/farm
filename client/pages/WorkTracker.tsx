@@ -756,7 +756,7 @@ export default function WorkTracker() {
                             />
                           </div>
 
-                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                          <div className="mt-2 border rounded-md p-3 max-h-48 overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
                             {animals.length === 0 ? (
                               <p className="text-gray-500 text-sm">No animals available</p>
                             ) : (
