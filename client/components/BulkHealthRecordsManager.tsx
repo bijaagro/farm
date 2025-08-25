@@ -214,7 +214,7 @@ export default function BulkHealthRecordsManager({
           Manage Health Records
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-full sm:w-[95vw] sm:max-w-4xl h-[95vh] sm:h-[90vh] max-h-[95vh] sm:max-h-[90vh] overflow-hidden p-4 sm:p-6 mx-2 sm:mx-4 my-2 sm:my-4 rounded-lg">
+      <DialogContent className="w-full sm:w-[95vw] sm:max-w-4xl h-[95vh] sm:h-[90vh] max-h-[95vh] sm:max-h-[90vh] flex flex-col p-4 sm:p-6 mx-2 sm:mx-4 my-2 sm:my-4 rounded-lg">
         <DialogHeader className="pb-4">
           <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
             <Stethoscope className="h-5 w-5" />
@@ -250,7 +250,7 @@ export default function BulkHealthRecordsManager({
           </div>
         </div>
 
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-[70vh] sm:h-[calc(90vh-160px)] overflow-hidden">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 flex-1 min-h-0">
           {/* Animal Selection Panel */}
           <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <div className="space-y-2 sm:space-y-3">
@@ -309,7 +309,8 @@ export default function BulkHealthRecordsManager({
             </div>
 
             {/* Animals List */}
-            <ScrollArea className="h-48 md:h-64 border rounded-md p-3">
+            <div className="flex-1 min-h-0">
+              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px] border rounded-md p-3">
               <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
@@ -350,15 +351,17 @@ export default function BulkHealthRecordsManager({
                   </div>
                 )}
               </div>
-            </ScrollArea>
+              </ScrollArea>
+            </div>
           </div>
 
           {/* Health Record Form */}
           <div className="space-y-3 sm:space-y-4 overflow-hidden flex-1 md:flex-none min-h-0">
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
-            <ScrollArea className="h-48 md:h-64">
-              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
+            <div className="flex-1 min-h-0">
+              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px]">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1 sm:space-y-2">
                     <Label htmlFor="recordType" className="text-sm">Record Type *</Label>
@@ -528,8 +531,9 @@ export default function BulkHealthRecordsManager({
                     rows={2}
                   />
                 </div>
-              </form>
-            </ScrollArea>
+                </form>
+              </ScrollArea>
+            </div>
           </div>
         </div>
       </DialogContent>
