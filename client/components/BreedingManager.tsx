@@ -398,6 +398,25 @@ export default function BreedingManager({
           <div className="max-h-[calc(95vh-160px)] overflow-hidden">
             <ScrollArea className="h-[600px] pr-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Actions */}
+                  <div className="flex flex-col sm:flex-row gap-2 pt-6 border-t">
+                    <Button
+                      type="submit"
+                      disabled={submitting || formData.kids.length === 0}
+                      className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto"
+                    >
+                      {submitting ? "Adding Kids..." : `Add ${formData.kids.length} Kid${formData.kids.length !== 1 ? 's' : ''}`}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setIsDialogOpen(false)}
+                      disabled={submitting}
+                      className="w-full sm:w-auto"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                   {/* Birth Information */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-gray-900 flex items-center gap-2">
@@ -623,26 +642,6 @@ export default function BreedingManager({
                         />
                       </div>
                     </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex flex-col sm:flex-row gap-2 pt-6 border-t">
-                    <Button
-                      type="submit"
-                      disabled={submitting || formData.kids.length === 0}
-                      className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto"
-                    >
-                      {submitting ? "Adding Kids..." : `Add ${formData.kids.length} Kid${formData.kids.length !== 1 ? 's' : ''}`}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setIsDialogOpen(false)}
-                      disabled={submitting}
-                      className="w-full sm:w-auto"
-                    >
-                      Cancel
-                    </Button>
                   </div>
                 </form>
             </ScrollArea>
