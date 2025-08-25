@@ -380,7 +380,8 @@ export default function BreedingManager({
             className="bg-pink-50 border-pink-200 text-pink-700 hover:bg-pink-100"
             title="Add Kids - Click to record new births for this animal"
           >
-            <Rabbit className="h-4 w-4" />
+            <Rabbit className="h-4 w-4 mr-1" />
+            <span className="hidden sm:inline">Add Kids</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="w-[95vw] max-w-3xl max-h-[95vh] overflow-y-auto mx-2 sm:mx-4">
