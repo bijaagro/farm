@@ -41,6 +41,7 @@ import {
 import { AnimalRecord } from "@shared/animal-types";
 import * as animalApi from "@/lib/animal-api";
 import { useToast } from "@/hooks/use-toast";
+import "../health-records-scroll.css";
 
 interface BulkHealthRecordsManagerProps {
   animals: AnimalRecord[];
@@ -310,7 +311,7 @@ export default function BulkHealthRecordsManager({
 
             {/* Animals List */}
             <div className="flex-1 min-h-0">
-              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px] border rounded-md p-3">
+              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px] border rounded-md p-3 health-records-scroll health-records-container">
               <div className="space-y-1 sm:space-y-2">
                 {filteredAnimals.map((animal) => (
                   <div
@@ -360,7 +361,7 @@ export default function BulkHealthRecordsManager({
             <h3 className="text-base sm:text-lg font-semibold">Health Record Details</h3>
 
             <div className="flex-1 min-h-0">
-              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px]">
+              <ScrollArea className="h-full max-h-[300px] md:max-h-[400px] health-records-scroll health-records-container">
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1 sm:space-y-2">
