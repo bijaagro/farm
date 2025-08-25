@@ -23,7 +23,15 @@ export default defineConfig(({ mode }) => {
   build: {
     outDir: "dist",
     rollupOptions: {
-      input: "index.html"
+      input: "index.html",
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-select', '@radix-ui/react-tabs'],
+          charts: ['recharts'],
+          router: ['react-router-dom']
+        }
+      }
     },
     assetsInclude: ["**/*.js", "**/*.mjs"],
   },
