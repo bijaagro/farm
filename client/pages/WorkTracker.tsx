@@ -253,6 +253,7 @@ export default function WorkTracker() {
       notes: "",
       selectedAnimals: [],
     });
+    setAnimalSearchTerm("");
     setIsAddDialogOpen(false);
   };
 
