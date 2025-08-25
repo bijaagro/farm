@@ -25,11 +25,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -45,10 +40,6 @@ import {
   Edit,
   Users,
   Rabbit,
-  ChevronDown,
-  ChevronRight,
-  Save,
-  X,
 } from "lucide-react";
 import {
   AnimalRecord,
@@ -387,25 +378,25 @@ export default function BreedingManager({
             size="sm"
             variant="outline"
             className="bg-pink-50 border-pink-200 text-pink-700 hover:bg-pink-100"
-            title="Breeding & Birth Records - Click to record new births and view breeding history"
+            title="Add Kids - Click to record new births for this animal"
           >
             <Rabbit className="h-4 w-4" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[95vw] max-w-4xl max-h-[95vh] overflow-y-auto mx-2 sm:mx-4">
+        <DialogContent className="w-[95vw] max-w-3xl max-h-[95vh] overflow-y-auto mx-2 sm:mx-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
               <Baby className="h-4 w-4 sm:h-5 sm:w-5" />
               <span className="truncate">Add Kids - {mother.name}</span>
             </DialogTitle>
             <DialogDescription className="text-xs sm:text-sm">
-              Record new births and add kids for {mother.name}
+              Record new births and add kids for {mother.name}. The breeding summary will appear on the animal card after saving.
             </DialogDescription>
           </DialogHeader>
 
           <div className="max-h-[calc(95vh-160px)] overflow-hidden">
             <ScrollArea className="h-[600px] pr-4">
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pr-2 sm:pr-3">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Breeding Details */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-gray-900">
