@@ -679,6 +679,62 @@ export default function AnimalTracker() {
                       )}
                     </div>
 
+                    {/* Breeding Summary */}
+                    {(() => {
+                      const breedingSummary = getBreedingSummary(animal);
+                      const hasBreedingInfo = breedingSummary.offspringCount > 0 || breedingSummary.isPregnant;
+
+                      if (!hasBreedingInfo) return null;
+
+                      return (
+                        <div className="border-t pt-3 mt-3">
+                          <div className="flex items-center gap-1 mb-2">
+                            <Baby className="h-4 w-4 text-pink-600" />
+                            <span className="text-sm font-medium text-pink-700">Breeding Summary</span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            {breedingSummary.offspringCount > 0 && (
+                              <div>
+                                <span className="text-gray-500">Offspring:</span>
+                                <div className="font-medium text-pink-700">
+                                  {breedingSummary.offspringCount} {breedingSummary.offspringCount === 1 ? 'kid' : 'kids'}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.totalBreedings > 0 && (
+                              <div>
+                                <span className="text-gray-500">{animal.gender === 'female' ? 'Births:' : 'Breedings:'}</span>
+                                <div className="font-medium text-pink-700">
+                                  {breedingSummary.totalBreedings} time{breedingSummary.totalBreedings !== 1 ? 's' : ''}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.isPregnant && (
+                              <div className="col-span-2">
+                                <div className="flex items-center gap-1">
+                                  <Heart className="h-3 w-3 text-red-500" />
+                                  <span className="text-xs font-medium text-red-600">Pregnant</span>
+                                  {breedingSummary.expectedDeliveryDate && (
+                                    <span className="text-xs text-gray-500">
+                                      (Due: {new Date(breedingSummary.expectedDeliveryDate).toLocaleDateString()})
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                            {breedingSummary.lastBreedingDate && !breedingSummary.isPregnant && (
+                              <div className="col-span-2">
+                                <span className="text-gray-500">Last {animal.gender === 'female' ? 'Birth' : 'Breeding'}:</span>
+                                <div className="font-medium text-gray-700 text-xs">
+                                  {breedingSummary.lastBreedingDate.toLocaleDateString()}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     <div className="flex gap-2 flex-wrap">
                       <Button
                         size="sm"
@@ -701,14 +757,16 @@ export default function AnimalTracker() {
                             allAnimals={animals}
                             onUpdateAnimals={async () => {
                               try {
-                                const [animalsData, summaryData] =
+                                const [animalsData, summaryData, breedingRecordsData] =
                                   await Promise.all([
                                     animalApi.fetchAnimals(),
                                     animalApi.fetchAnimalSummary(),
+                                    animalApi.fetchBreedingRecords(),
                                   ]);
                                 setAnimals(animalsData);
                                 setFilteredAnimals(animalsData);
                                 setSummary(summaryData);
+                                setBreedingRecords(breedingRecordsData);
                               } catch (error) {
                                 console.error(
                                   "Error refreshing animal data:",
@@ -781,13 +839,15 @@ export default function AnimalTracker() {
                 onClose={() => setViewingAnimal(null)}
                 onUpdate={async () => {
                   try {
-                    const [animalsData, summaryData] = await Promise.all([
+                    const [animalsData, summaryData, breedingRecordsData] = await Promise.all([
                       animalApi.fetchAnimals(),
                       animalApi.fetchAnimalSummary(),
+                      animalApi.fetchBreedingRecords(),
                     ]);
                     setAnimals(animalsData);
                     setFilteredAnimals(animalsData);
                     setSummary(summaryData);
+                    setBreedingRecords(breedingRecordsData);
                   } catch (error) {
                     console.error("Error refreshing animal data:", error);
                   }
