@@ -94,11 +94,15 @@ export default function AnimalTracker() {
 
   // Calculate breeding summary for an animal
   const getBreedingSummary = (animal: AnimalRecord) => {
-    const offspringCount = animal.offspring?.length || 0;
+    //const offspringCount = animal.offspring?.length || 0;
     const asMotherRecords = breedingRecords.filter(record => record.motherId === animal.id && record.actualDeliveryDate);
     const asFatherRecords = breedingRecords.filter(record => record.fatherId === animal.id && record.actualDeliveryDate);
 
     const totalBreedings = animal.gender === 'female' ? asMotherRecords.length : asFatherRecords.length;
+    const offspringCount = animal.gender === 'female' ?
+     asMotherRecords.map(item => item.totalKids).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+     :asFatherRecords.map(item => item.totalKids).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
     const lastBreedingDate = animal.gender === 'female'
       ? asMotherRecords.length > 0 ? Math.max(...asMotherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null
       : asFatherRecords.length > 0 ? Math.max(...asFatherRecords.map(r => new Date(r.actualDeliveryDate!).getTime())) : null;

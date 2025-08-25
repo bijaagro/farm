@@ -184,20 +184,6 @@ export default function BreedingHistory() {
   const applyFilters = () => {
     let filtered = breedingRecords;
 
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter((record) => {
-        const mother = animals.find((a) => a.id === record.motherId);
-        const father = animals.find((a) => a.id === record.fatherId);
-        return (
-          mother?.name.toLowerCase().includes(searchLower) ||
-          father?.name.toLowerCase().includes(searchLower) ||
-          record.veterinarianName?.toLowerCase().includes(searchLower) ||
-          record.notes?.toLowerCase().includes(searchLower)
-        );
-      });
-    }
-
     if (filters.motherId && filters.motherId !== "all") {
       filtered = filtered.filter(
         (record) => record.motherId === filters.motherId,
@@ -216,12 +202,10 @@ export default function BreedingHistory() {
       );
     }
 
-    if (filters.year && filters.year !== "all") {
+    if (filters.status && filters.status !== "all") {
       filtered = filtered.filter((record) => {
-        const year = new Date(
-          record.actualDeliveryDate || record.breedingDate,
-        ).getFullYear();
-        return year.toString() === filters.year;
+        const status = getBreedingStatus(record).status;
+        return status === filters.status;
       });
     }
 
@@ -234,23 +218,27 @@ export default function BreedingHistory() {
       });
     }
 
-    if (filters.dateTo) {
-      filtered = filtered.filter((record) => {
-        const recordDate = new Date(
-          record.actualDeliveryDate || record.breedingDate,
-        );
-        return recordDate <= new Date(filters.dateTo);
-      });
-    }
-
     setFilteredRecords(filtered);
   };
 
   const calculateStats = () => {
     const totalBreedings = breedingRecords.length;
-    const successfulBreedings = breedingRecords.filter(
-      (r) => r.totalKids && r.totalKids > 0,
-    ).length;
+    
+    const successfulBreedings = breedingRecords.filter((r) => {
+      if (!r.totalKids || r.totalKids === 0) return false;
+      
+      // If kidDetails exist, check if any kids are alive
+      if (r.kidDetails && r.kidDetails.length > 0) {
+        return r.kidDetails.some((kidId) => {
+          const kidAnimal = getAnimalById(kidId);
+          return kidAnimal?.status !== "dead";
+        });
+      }
+      
+      // If no kidDetails, consider it successful if totalKids > 0
+      return true;
+    }).length;
+
     const totalOffspring = breedingRecords.reduce(
       (sum, r) => sum + (r.totalKids || 0),
       0,
@@ -322,6 +310,28 @@ export default function BreedingHistory() {
 
   const getBreedingStatus = (record: BreedingRecord) => {
     if (record.actualDeliveryDate) {
+      // Check kid survival if kidDetails exist
+      if (record.kidDetails && record.kidDetails.length > 0) {
+        const aliveKids = record.kidDetails.filter((kidId) => {
+          const kidAnimal = getAnimalById(kidId);
+          return kidAnimal?.status !== "dead";
+        });
+        
+        if (aliveKids.length === 0) {
+          return {
+            status: "failed",
+            label: "Failed",
+            color: "bg-red-100 text-red-800",
+          };
+        } else if (aliveKids.length < record.kidDetails.length) {
+          return {
+            status: "partial",
+            label: "Partial Success",
+            color: "bg-orange-100 text-orange-800",
+          };
+        }
+      }
+      
       return {
         status: "completed",
         label: "Delivered",
@@ -626,193 +636,7 @@ export default function BreedingHistory() {
           </div>
         )}
 
-        {/* Filters */}
-        <Card>
-          <CardContent className="p-4 sm:p-6">
-            <Collapsible
-              open={isFiltersExpanded}
-              onOpenChange={setIsFiltersExpanded}
-            >
-              <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="flex items-center justify-between w-full p-0 h-auto"
-                >
-                  <div className="flex items-center gap-2">
-                    <Filter className="h-5 w-5 text-gray-600" />
-                    <h3 className="text-lg font-semibold">Filters & Search</h3>
-                  </div>
-                  {isFiltersExpanded ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-4 mt-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="space-y-2">
-                    <Label>Search</Label>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                      <Input
-                        placeholder="Search by animal name, vet..."
-                        value={filters.search}
-                        onChange={(e) =>
-                          setFilters((prev) => ({
-                            ...prev,
-                            search: e.target.value,
-                          }))
-                        }
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label>Mother</Label>
-                    <Select
-                      value={filters.motherId}
-                      onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, motherId: value }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="All mothers" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All mothers</SelectItem>
-                        {animals
-                          .filter((a) => a.gender === "female")
-                          .map((animal) => (
-                            <SelectItem key={animal.id} value={animal.id}>
-                              {animal.name} ({animal.breed})
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Father</Label>
-                    <Select
-                      value={filters.fatherId}
-                      onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, fatherId: value }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="All fathers" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All fathers</SelectItem>
-                        {animals
-                          .filter((a) => a.gender === "male")
-                          .map((animal) => (
-                            <SelectItem key={animal.id} value={animal.id}>
-                              {animal.name} ({animal.breed})
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Method</Label>
-                    <Select
-                      value={filters.method}
-                      onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, method: value }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="All methods" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All methods</SelectItem>
-                        <SelectItem value="natural">Natural</SelectItem>
-                        <SelectItem value="artificial_insemination">
-                          AI
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Year</Label>
-                    <Select
-                      value={filters.year}
-                      onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, year: value }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="All years" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All years</SelectItem>
-                        {uniqueYears.map((year) => (
-                          <SelectItem key={year} value={year.toString()}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Date From</Label>
-                    <Input
-                      type="date"
-                      value={filters.dateFrom}
-                      onChange={(e) =>
-                        setFilters((prev) => ({
-                          ...prev,
-                          dateFrom: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Date To</Label>
-                    <Input
-                      type="date"
-                      value={filters.dateTo}
-                      onChange={(e) =>
-                        setFilters((prev) => ({
-                          ...prev,
-                          dateTo: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-
-                  <div className="flex items-end">
-                    <Button
-                      variant="outline"
-                      onClick={() =>
-                        setFilters({
-                          search: "",
-                          motherId: "all",
-                          fatherId: "all",
-                          method: "all",
-                          status: "all",
-                          year: "all",
-                          dateFrom: "",
-                          dateTo: "",
-                        })
-                      }
-                      className="w-full"
-                    >
-                      Clear Filters
-                    </Button>
-                  </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </CardContent>
-        </Card>
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="records" className="w-full">
@@ -847,12 +671,84 @@ export default function BreedingHistory() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Mother</TableHead>
-                        <TableHead>Father</TableHead>
-                        <TableHead>Method</TableHead>
+                        <TableHead>
+                          <div className="space-y-2">
+                            <div>Date</div>
+                            <Input
+                              type="date"
+                              placeholder="Filter by date"
+                              value={filters.dateFrom}
+                              onChange={(e) => setFilters(prev => ({ ...prev, dateFrom: e.target.value }))}
+                              className="h-8 text-xs"
+                            />
+                          </div>
+                        </TableHead>
+                        <TableHead>
+                          <div className="space-y-2">
+                            <div>Mother</div>
+                            <Select value={filters.motherId} onValueChange={(value) => setFilters(prev => ({ ...prev, motherId: value }))}>
+                              <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="All" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                {animals.filter(a => a.gender === "female").map(animal => (
+                                  <SelectItem key={animal.id} value={animal.id}>{animal.name}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </TableHead>
+                        <TableHead>
+                          <div className="space-y-2">
+                            <div>Father</div>
+                            <Select value={filters.fatherId} onValueChange={(value) => setFilters(prev => ({ ...prev, fatherId: value }))}>
+                              <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="All" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                {animals.filter(a => a.gender === "male").map(animal => (
+                                  <SelectItem key={animal.id} value={animal.id}>{animal.name}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </TableHead>
+                        <TableHead>
+                          <div className="space-y-2">
+                            <div>Method</div>
+                            <Select value={filters.method} onValueChange={(value) => setFilters(prev => ({ ...prev, method: value }))}>
+                              <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="All" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                <SelectItem value="natural">Natural</SelectItem>
+                                <SelectItem value="artificial_insemination">AI</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </TableHead>
                         <TableHead>Offspring</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead>
+                          <div className="space-y-2">
+                            <div>Status</div>
+                            <Select value={filters.status} onValueChange={(value) => setFilters(prev => ({ ...prev, status: value }))}>
+                              <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="All" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                <SelectItem value="completed">Delivered</SelectItem>
+                                <SelectItem value="failed">Failed</SelectItem>
+                                <SelectItem value="partial">Partial</SelectItem>
+                                <SelectItem value="pregnant">Pregnant</SelectItem>
+                                <SelectItem value="bred">Bred</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </TableHead>
                         <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -1011,39 +907,59 @@ export default function BreedingHistory() {
                 </CardContent>
               </Card>
 
-              {/* Breeding Method Distribution */}
+              {/* Status Distribution */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Breeding Method Distribution</CardTitle>
+                  <CardTitle>Breeding Status Distribution</CardTitle>
                   <CardDescription>
-                    Natural vs Artificial Insemination
+                    Success, failure, and partial success rates
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                      data={[
-                        {
-                          method: "Natural",
-                          count: breedingRecords.filter(
-                            (r) => r.breedingMethod === "natural",
-                          ).length,
-                        },
-                        {
-                          method: "AI",
-                          count: breedingRecords.filter(
-                            (r) =>
-                              r.breedingMethod === "artificial_insemination",
-                          ).length,
-                        },
-                      ]}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="method" />
-                      <YAxis />
+                    <PieChart>
+                      <Pie
+                        data={[
+                          {
+                            name: "Delivered",
+                            value: breedingRecords.filter(r => getBreedingStatus(r).status === "completed").length,
+                            color: "#10B981"
+                          },
+                          {
+                            name: "Failed",
+                            value: breedingRecords.filter(r => getBreedingStatus(r).status === "failed").length,
+                            color: "#EF4444"
+                          },
+                          {
+                            name: "Partial Success",
+                            value: breedingRecords.filter(r => getBreedingStatus(r).status === "partial").length,
+                            color: "#F97316"
+                          },
+                          {
+                            name: "Pregnant",
+                            value: breedingRecords.filter(r => getBreedingStatus(r).status === "pregnant").length,
+                            color: "#3B82F6"
+                          },
+                          {
+                            name: "Bred",
+                            value: breedingRecords.filter(r => getBreedingStatus(r).status === "bred").length,
+                            color: "#EAB308"
+                          }
+                        ].filter(item => item.value > 0)}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        dataKey="value"
+                        label={({ name, value }) => `${name}: ${value}`}
+                      >
+                        {breedingRecords.map((_, index) => (
+                          <Cell key={`cell-${index}`} fill={[
+                            "#10B981", "#EF4444", "#F97316", "#3B82F6", "#EAB308"
+                          ][index % 5]} />
+                        ))}
+                      </Pie>
                       <Tooltip />
-                      <Bar dataKey="count" fill="#10B981" />
-                    </BarChart>
+                    </PieChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
