@@ -525,7 +525,7 @@ export default function AnimalTracker() {
                       Add Animal
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+                  <DialogContent className="max-w-2xl mx-4">
                     <DialogHeader>
                       <DialogTitle>Add New Animal</DialogTitle>
                       <DialogDescription>
