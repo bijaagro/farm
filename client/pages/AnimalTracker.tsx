@@ -805,7 +805,7 @@ export default function AnimalTracker() {
         {/* Edit Animal Dialog */}
         {editingAnimal && (
           <Dialog open={true} onOpenChange={() => setEditingAnimal(null)}>
-            <DialogContent className="max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl mx-4">
               <DialogHeader>
                 <DialogTitle>Edit Animal</DialogTitle>
                 <DialogDescription>
@@ -825,7 +825,7 @@ export default function AnimalTracker() {
         {/* View Animal Dialog */}
         {viewingAnimal && (
           <Dialog open={true} onOpenChange={() => setViewingAnimal(null)}>
-            <DialogContent className="max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl mx-4">
               <VisuallyHidden>
                 <DialogTitle>View Animal - {viewingAnimal.name}</DialogTitle>
               </VisuallyHidden>
